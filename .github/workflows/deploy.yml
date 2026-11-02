@@ -1,9 +1,7 @@
 name: Deploy to Bluehost
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  workflow_dispatch:   # in this public copy, run manually after setting the FTP secrets
 
 concurrency:
   group: deploy
