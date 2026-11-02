@@ -1,0 +1,34 @@
+name: Deploy to Bluehost
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PHP syntax
+        run: php -l public/api.php
+
+      - name: Upload to server (FTPS)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./public/
+          server-dir: ./
+          # the data folder lives only on the server and is never touched by deploys
+          exclude: |
+            **/.git*
+            **/.git*/**
+            data/**

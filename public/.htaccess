@@ -1,0 +1,27 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # never serve the data folder or hidden files
+  RewriteRule ^data(/|$) - [F,L]
+  RewriteRule (^|/)\. - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "no-referrer"
+  Header always set X-Frame-Options "DENY"
+  <FilesMatch "\.(html|js|webmanifest)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
+AddType application/manifest+json .webmanifest
+
+# server-only scripts
+<FilesMatch "^(cron|push-lib)\.php$">
+  Require all denied
+</FilesMatch>

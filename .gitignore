@@ -1,0 +1,3 @@
+public/data/
+*.backup.json
+.DS_Store

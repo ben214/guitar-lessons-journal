@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>יומן שיעורי גיטרה</title>
+<meta name="theme-color" content="#1F5E4B">
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: one-column phone app — sticky header, scrolling content, fixed bottom tab bar, bottom sheets for forms. */
+:root{
+  --bg:#EEF2EF; --surface:#FFFFFF; --sunk:#E3E9E5; --ink:#15201B; --muted:#5B6862; --line:#D5DDD8;
+  --accent:#1F5E4B; --accent-ink:#FFFFFF; --accent-soft:#D7E9E1;
+  --paid:#2C7A4B; --paid-soft:#DDF0E3; --owed:#B4501A; --owed-soft:#FBE6D8; --off:#8C9590;
+  --shadow:0 1px 2px rgba(21,32,27,.06),0 6px 20px rgba(21,32,27,.07);
+  --f-display:"Rubik","Arial Hebrew",Arial,sans-serif;
+  --f-body:"Rubik","Arial Hebrew",Arial,system-ui,sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --nav-h:64px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1412; --surface:#17201C; --sunk:#111915; --ink:#E6EDE9; --muted:#93A39B; --line:#28342F;
+  --accent:#62C3A0; --accent-ink:#06130E; --accent-soft:#1B3A2F;
+  --paid:#72CF94; --paid-soft:#173322; --owed:#F2A169; --owed-soft:#3A2416; --off:#6F7B75;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1412; --surface:#17201C; --sunk:#111915; --ink:#E6EDE9; --muted:#93A39B; --line:#28342F;
+  --accent:#62C3A0; --accent-ink:#06130E; --accent-soft:#1B3A2F;
+  --paid:#72CF94; --paid-soft:#173322; --owed:#F2A169; --owed-soft:#3A2416; --off:#6F7B75;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0}
+img{max-width:100%}
+html,body{min-height:100%}
+body{direction:rtl;background:var(--bg);color:var(--ink);font:15px/1.45 var(--f-body);-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:12px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.brand svg{flex:none}
+.brand h1{font:800 20px/1.1 var(--f-display);letter-spacing:-.01em;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sync{font-size:12px;color:var(--muted);white-space:nowrap}
+
+main{padding-bottom:calc(var(--nav-h) + 96px + env(safe-area-inset-bottom,0px))}
+main .wrap{display:flex;flex-direction:column;gap:16px;padding-block:16px}
+
+/* bottom nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.nav .wrap{display:grid;grid-template-columns:repeat(3,1fr);height:var(--nav-h)}
+.nav button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600;color:var(--muted)}
+.nav button[aria-current="page"]{color:var(--accent)}
+.nav svg{width:22px;height:22px}
+.fab{position:fixed;z-index:21;left:max(16px,calc(env(safe-area-inset-left,0px) + 16px));bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom,0px));
+  height:56px;padding:0 20px 0 16px;border-radius:18px;border:0;background:var(--accent);color:var(--accent-ink);font-weight:700;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
+.fab svg{width:22px;height:22px}
+
+/* generic */
+.row{display:flex;align-items:center;gap:8px}
+.between{justify-content:space-between}
+.h2{font:700 13px/1 var(--f-body);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:4px 0 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.btn{text-decoration:none;color:var(--ink);border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--owed);border-color:var(--owed)}
+.btn.danger.armed{background:var(--owed);color:var(--surface)}
+.icon-btn{width:42px;height:42px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;flex:none}
+.icon-btn svg{width:20px;height:20px}
+.muted{color:var(--muted)}
+.empty{padding:28px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted)}
+.empty b{color:var(--ink);font-size:16px}
+.banner{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;background:var(--accent-soft);font-size:14px}
+.banner p{margin:0;flex:1;min-width:0}
+
+/* week strip */
+.weekbar{display:flex;align-items:center;gap:8px}
+.weekbar .title{flex:1;min-width:0;font:700 18px/1.2 var(--f-display)}
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dchip{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 0 7px;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.dchip .wd{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.dchip .dn{font:600 17px/1.2 var(--f-num)}
+.dchip .dots{display:flex;gap:3px;height:6px}
+.dchip .dots i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.dots i.paid{background:var(--paid)} .dots i.owed{background:var(--owed)} .dots i.off{background:var(--off)}
+.dchip.today .dn{color:var(--accent)}
+.dchip.sel{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.dchip.sel .wd,.dchip.sel .dn{color:var(--bg)}
+.summary{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--muted)}
+.summary b{color:var(--ink);font-family:var(--f-num);font-weight:600}
+.summary b.owed{color:var(--owed)}
+
+/* lesson cards */
+.daytitle{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.daytitle h2{font:700 20px/1.2 var(--f-display);margin:0}
+.list{display:flex;flex-direction:column;gap:8px}
+.lesson{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;cursor:pointer;position:relative;overflow:hidden}
+.lesson::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--accent)}
+.lesson.st-paid::before{background:var(--paid)} .lesson.st-owed::before,.lesson.st-partial::before{background:var(--owed)} .lesson.st-off::before{background:var(--off)}
+.lesson.st-off .l-name{text-decoration:line-through;color:var(--muted)}
+.l-time{display:flex;flex-direction:column;align-items:flex-start;padding-left:4px;min-width:56px}
+.l-time b{font:600 17px/1.2 var(--f-num)}
+.l-time span{font-size:12px;color:var(--muted)}
+.l-main{min-width:0}
+.l-name{font-weight:700;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.l-meta{font-size:13px;color:var(--muted)}
+.l-note{font-size:13px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pay{border:1.5px solid var(--line);background:var(--sunk);border-radius:12px;min-width:84px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;gap:1px}
+.pay b{font:600 15px/1.2 var(--f-num)}
+.pay small{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.pay.is-paid{background:var(--paid-soft);border-color:var(--paid)} .pay.is-paid small,.pay.is-paid b{color:var(--paid)}
+.pay.is-owed{background:var(--owed-soft);border-color:var(--owed)} .pay.is-owed small,.pay.is-owed b{color:var(--owed)}
+.pay.is-off{opacity:.55}
+
+/* students */
+.search{width:100%;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 14px;min-height:44px}
+.stu{display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;cursor:pointer;width:100%;text-align:start}
+.ava{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:800 15px/1 var(--f-display);background:var(--accent-soft);color:var(--accent);flex:none}
+.stu .mid{flex:1;min-width:0}
+.stu .nm{font-weight:700;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stu .sub{font-size:13px;color:var(--muted)}
+.chip{font:600 13px/1 var(--f-num);padding:6px 9px;border-radius:999px;white-space:nowrap}
+.chip.owed{background:var(--owed-soft);color:var(--owed)}
+.chip.ok{background:var(--paid-soft);color:var(--paid);font-family:var(--f-body)}
+.chip.arch{background:var(--sunk);color:var(--muted);font-family:var(--f-body)}
+
+/* money */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tile{padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile span{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.tile b{font:600 22px/1.15 var(--f-num);overflow-wrap:anywhere}
+.tile small{font-size:12px;color:var(--muted)}
+.tile.owed b{color:var(--owed)} .tile.paid b{color:var(--paid)}
+.bar{height:8px;border-radius:99px;background:var(--owed-soft);overflow:hidden;margin-top:4px}
+.bar i{display:block;height:100%;background:var(--paid);border-radius:99px}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:10px 12px;text-align:end;white-space:nowrap;border-bottom:1px solid var(--line)}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+th:first-child,td:first-child{text-align:start}
+td.num{font-family:var(--f-num)}
+tr:last-child td{border-bottom:0}
+td.owed{color:var(--owed)}
+.oweline{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line);cursor:pointer;width:100%;background:none;border-left:0;border-right:0;border-top:0;text-align:start}
+.oweline:last-child{border-bottom:0}
+.oweline .mid{flex:1;min-width:0}
+.settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;padding:14px}
+
+/* sheet */
+.scrim{position:fixed;inset:0;z-index:40;background:rgba(10,16,13,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:640px;max-height:calc(100% - 24px - env(safe-area-inset-top,0px));overflow:auto;border-radius:20px 20px 0 0;
+  padding:8px max(16px,env(safe-area-inset-left,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-direction:column;gap:14px}
+.sheet.anim{animation:up .2s ease-out}
+@keyframes up{from{transform:translateY(24px);opacity:.6}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.sheet.anim{animation:none}}
+.grab{width:40px;height:4px;border-radius:9px;background:var(--line);margin:4px auto 0}
+.sheet h3{font:800 22px/1.2 var(--f-display);margin:0;flex:1;min-width:0;text-wrap:balance}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fields .full{grid-column:1/-1}
+label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:600;color:var(--muted);min-width:0}
+.f input,.f select,.f textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 12px;min-height:44px;width:100%;color:var(--ink);font-weight:500;font-size:16px}
+.f textarea{min-height:76px;resize:vertical}
+.seg{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--bg)}
+.seg label{flex:1;position:relative}
+.seg input{position:absolute;opacity:0;inset:0}
+.seg span{display:block;text-align:center;padding:10px 4px;font-size:14px;font-weight:600;color:var(--muted)}
+.seg input:checked+span{background:var(--ink);color:var(--bg)}
+.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:-2px}
+.warn{font-size:13px;color:var(--owed);background:var(--owed-soft);border-radius:10px;padding:8px 12px}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.actions .grow{flex:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stats div{background:var(--bg);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stats span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.stats b{font:600 17px/1.2 var(--f-num);overflow-wrap:anywhere}
+.hist{display:flex;flex-direction:column}
+.hrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 2px;border-bottom:1px solid var(--line);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;text-align:start;width:100%}
+.hrow .d{font:500 14px/1.2 var(--f-num);min-width:96px}
+.hrow .s{font-size:13px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.remind textarea{min-height:120px}
+.phone{font-family:var(--f-num);user-select:all}
+.groupttl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:4px;border-top:1px solid var(--line);margin-top:2px;padding-block:10px 0}
+.checkrow{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.checkrow input{width:20px;height:20px;margin:1px 0 0;flex:none;accent-color:var(--accent)}
+.contact{display:flex;flex-direction:column;gap:10px}
+.cbtns{display:grid;grid-template-columns:repeat(auto-fit,minmax(70px,1fr));gap:8px}
+.cbtn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px;border-radius:12px;background:var(--accent-soft);color:var(--accent);text-decoration:none;font-size:13px;font-weight:700}
+.cbtn svg{width:22px;height:22px}
+.clines{display:flex;flex-direction:column}
+.cline{display:grid;grid-template-columns:72px 1fr auto;align-items:center;gap:8px;font-size:14px;padding:2px 0}
+.cval{direction:ltr;text-align:right;font-family:var(--f-num);min-width:0;overflow-wrap:anywhere;user-select:all}
+.icon-btn.sm{width:34px;height:34px;border-radius:8px}
+.icon-btn.sm svg{width:16px;height:16px}
+.contact-empty{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:14px}
+.weekly{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:12px;border-radius:12px;border:1px dashed var(--line)}
+.weekly.on{border-style:solid;border-color:var(--accent);background:var(--accent-soft)}
+.wtxt{flex:1;min-width:160px;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.weekly.on .wtxt b{color:var(--accent)}
+.seg4 span{font-size:13px;padding-inline:2px}
+.ktag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--accent)}
+.ktag.k-debt{color:var(--owed)}
+.l-name,.nm,.sheet h3,.l-note,.hrow .s,td:first-child,.oweline b{unicode-bidi:plaintext}
+.phone{direction:ltr;unicode-bidi:isolate}
+input[type=tel],input[type=email]{direction:ltr;text-align:right}
+.h2,.tile span,.stats span,th,.dchip .wd,.pay small,.groupttl,.ktag{letter-spacing:0}
+.import{display:flex;gap:8px}
+.import .btn svg{flex:none}
+#gate{position:fixed;inset:0;z-index:80;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px 16px}
+#gate form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px}
+#gate h2{font:800 24px/1.2 var(--f-display);margin:0}
+#gate p{margin:0;color:var(--muted)}
+.gate-err{color:var(--owed);font-size:14px;min-height:1.2em}
+.setrow{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px 14px}
+.confirm{border-color:var(--accent);overflow:hidden}
+.crow{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--line);flex-wrap:wrap}
+.cmain{flex:1;min-width:150px;display:flex;flex-direction:column;gap:2px;font-size:14px}
+.cacts{display:flex;gap:6px;align-items:center}
+.icon-btn.ok{color:var(--paid);border-color:var(--paid);font-weight:800}
+.icon-btn.no{color:var(--owed);border-color:var(--owed);font-weight:800}
+.icon-btn.no.armed{background:var(--owed);color:var(--surface)}
+.nav button{position:relative}
+.badge{position:absolute;top:6px;inset-inline-start:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--owed);color:#fff;font:700 11px/18px var(--f-body);text-align:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 84px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;max-width:calc(100% - 32px);box-shadow:var(--shadow)}
+@media (max-width:380px){.fields{grid-template-columns:1fr}.pay{min-width:72px}.dchip .dn{font-size:15px}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="brand">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" fill="var(--accent)"/><g stroke="var(--accent-ink)" stroke-width="1.4" stroke-linecap="round"><path d="M8 6v16M12 6v16M16 6v16M20 6v16" opacity=".9"/><path d="M6 11h16M6 17h16" stroke-width="1"/></g><circle cx="16" cy="14" r="2.4" fill="var(--accent-ink)"/></svg>
+    <h1>יומן שיעורי גיטרה</h1>
+  </div>
+  <span class="sync" id="sync"></span>
+</div></header>
+
+<main><div class="wrap" id="view"><div class="empty"><b>פותח את היומן…</b></div></div></main>
+
+<button class="fab" id="fab" data-act="new-lesson" type="button" aria-label="הוספת שיעור">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>שיעור
+</button>
+
+<nav class="nav" aria-label="אזורים"><div class="wrap">
+  <button type="button" data-tab="schedule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>לוח שיעורים</button>
+  <button type="button" data-tab="students"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.8c2 .7 3.2 2.5 3.6 5.2"/></svg>תלמידים</button>
+  <button type="button" data-tab="money"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="13" rx="3"/><circle cx="12" cy="12.5" r="2.6"/><path d="M6 9.5v6M18 9.5v6"/></svg>כספים</button>
+</div></nav>
+
+<div id="sheetRoot"></div>
+<div id="gate" hidden></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ---------- helpers ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const fromYmd = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const addDays = (s, n) => { const d = fromYmd(s); d.setDate(d.getDate() + n); return ymd(d); };
+const today = () => ymd(new Date());
+const uid = () => (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2));
+const toMin = t => { const [h, m] = (t || '0:0').split(':').map(Number); return h * 60 + m; };
+const WD = ['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+const WDL = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+const MON = ['ינו׳','פבר׳','מרץ','אפר׳','מאי','יוני','יולי','אוג׳','ספט׳','אוק׳','נוב׳','דצמ׳'];
+const MONL = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+const METHODS = ['Cash','Bit','PayBox','Bank transfer','Other'];
+const MLABEL = { Cash: 'מזומן', Bit: 'ביט', PayBox: 'פייבוקס', 'Bank transfer': 'העברה בנקאית', Other: 'אחר' };
+const ML = m => MLABEL[m] || m || '';
+document.documentElement.lang = 'he'; document.documentElement.dir = 'rtl';
+const fmtD = s => { const d = fromYmd(s); return d.getDate() + '.' + (d.getMonth() + 1); };
+const fmtDW = s => { const d = fromYmd(s); return WD[d.getDay()] + ' ' + d.getDate() + '.' + (d.getMonth() + 1); };
+const num = v => { const n = parseFloat(v); return isFinite(n) ? n : 0; };
+
+/* ---------- state ---------- */
+const S = { students: {}, lessons: {}, charges: {}, settings: { currency: '₪', cc: '972', method: 'Cash', weekStart: 0, remindBeforeAt: '21:00', remindSameAt: '10:00' }, ready: false, online: null, pushOn: false };
+const UI = { tab: 'schedule', day: today(), month: today().slice(0, 7), q: '', showArchived: false, sheet: null };
+const money = n => S.settings.currency + (Math.round(n * 100) / 100).toLocaleString('en-US', { maximumFractionDigits: 2 });
+
+/* lesson math */
+const charged = l => l.status !== 'cancelled' && l.date <= today();
+const paidOf = l => num(l.paid);
+const owedOf = l => charged(l) ? Math.max(0, num(l.price) - paidOf(l)) : 0;
+function lessonState(l) {
+  if (l.status === 'cancelled') return 'off';
+  const p = paidOf(l), pr = num(l.price);
+  if (pr > 0 && p >= pr) return 'paid';
+  if (pr === 0) return 'paid';
+  if (l.date <= today()) return p > 0 ? 'partial' : 'owed';
+  return p > 0 ? 'partial' : 'upcoming';
+}
+const studentName = id => S.students[id]?.name || 'Unknown student';
+const lessonsOf = sid => Object.values(S.lessons).filter(l => l.studentId === sid);
+const chargesOf = sid => Object.values(S.charges).filter(c => c.studentId === sid);
+const chargeOwed = c => Math.max(0, num(c.amount) - num(c.paid));
+const owedFor = sid => lessonsOf(sid).reduce((a, l) => a + owedOf(l), 0) + chargesOf(sid).reduce((a, c) => a + chargeOwed(c), 0);
+const KINDS = { debt: 'חוב קודם', item: 'מכירת פריט', overtime: 'זמן נוסף', other: 'חיוב אחר' };
+const KSHORT = { debt: 'חוב קודם', item: 'פריט', overtime: 'זמן נוסף', other: 'אחר' };
+const KHINT = { debt: 'יתרה מלפני, למשל שיעורי ספטמבר', item: 'מיתרים, מפרטים, קאפו, ספר…', overtime: 'השיעור התארך ב־15 דקות', other: 'הקלטה, נסיעה…' };
+const untouched = l => l.recurring && l.status === 'ok' && !num(l.paid) && !l.note;
+
+/* ---------- weekly lessons ---------- */
+let ensureT;
+const scheduleEnsure = () => { clearTimeout(ensureT); ensureT = setTimeout(ensureRecurring, 300); };
+function ensureRecurring() {
+  if (!S.ready) return;
+  const t = today(), horizon = addDays(t, 7 * 8);
+  let made = 0;
+  for (const s of Object.values(S.students)) {
+    if (!s.recurring || s.archived || !(s.slotDay >= 0) || !s.slotTime) continue;
+    let d = s.recurFrom && s.recurFrom > t ? s.recurFrom : t;
+    for (let i = 0; i < 7 && fromYmd(d).getDay() !== +s.slotDay; i++) d = addDays(d, 1);
+    for (; d <= horizon; d = addDays(d, 7)) {
+      if ((s.skip || []).includes(d)) continue;
+      const id = 'r-' + s.id + '-' + d;
+      if (S.lessons[id] || Object.values(S.lessons).some(l => l.studentId === s.id && l.date === d)) continue;
+      const rec = { studentId: s.id, date: d, time: s.slotTime, duration: num(s.duration) || 45, price: num(s.rate), paid: 0, method: S.settings.method, status: 'ok', note: '', recurring: true, created: Date.now() };
+      if (s.example) rec.example = true;
+      save('lessons', id, rec, true); made++;
+    }
+  }
+  if (made) { render(); refreshSheetView(); }
+}
+/* after a student's slot changes: move or remove future lessons nobody has touched yet */
+function reflowWeekly(sid) {
+  const s = S.students[sid]; if (!s) return;
+  const t = today();
+  for (const l of lessonsOf(sid)) {
+    if (l.date < t || !untouched(l)) continue;
+    const keep = s.recurring && !s.archived && fromYmd(l.date).getDay() === +s.slotDay && (!s.recurFrom || l.date >= s.recurFrom);
+    if (keep) save('lessons', l.id, { ...l, time: s.slotTime, duration: num(s.duration) || 45, price: num(s.rate) }, true);
+    else save('lessons', l.id, null, true);
+  }
+  render(); refreshSheetView(); scheduleEnsure();
+}
+function stopWeekly(sid, after) {
+  const s = S.students[sid]; if (!s) return 0;
+  const gone = lessonsOf(sid).filter(l => l.date > after && untouched(l));
+  gone.forEach(l => save('lessons', l.id, null, true));
+  save('students', sid, { ...s, recurring: false });
+  return gone.length;
+}
+function skipDate(sid, d) {
+  const s = S.students[sid]; if (!s || !s.recurring) return;
+  const sk = (s.skip || []).filter(x => x >= today());
+  if (!sk.includes(d)) { sk.push(d); save('students', sid, { ...s, skip: sk }, true); }
+}
+const weekStartOf = s => { const d = fromYmd(s); const off = (d.getDay() - S.settings.weekStart + 7) % 7; d.setDate(d.getDate() - off); return ymd(d); };
+const initials = n => (n || '?').trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+
+/* ---------- storage: your server (api.php), with an offline copy on this phone ---------- */
+const API = 'api.php';
+const CKEY = 'glb-cache-v1', QKEY = 'glb-queue-v1', TKEY = 'glb-token';
+let token = ''; try { token = localStorage.getItem(TKEY) || ''; } catch (e) {}
+let queue = []; try { queue = JSON.parse(localStorage.getItem(QKEY) || '[]') || []; } catch (e) {}
+function cacheSave() {
+  try {
+    localStorage.setItem(CKEY, JSON.stringify({ students: S.students, lessons: S.lessons, charges: S.charges, settings: S.settings }));
+    localStorage.setItem(QKEY, JSON.stringify(queue));
+  } catch (e) {}
+}
+function cacheLoad() {
+  try {
+    const j = JSON.parse(localStorage.getItem(CKEY) || 'null');
+    if (j) { S.students = j.students || {}; S.lessons = j.lessons || {}; S.charges = j.charges || {}; Object.assign(S.settings, j.settings || {}); return true; }
+  } catch (e) {}
+  return false;
+}
+async function api(action, body) {
+  const r = await fetch(API + '?action=' + action, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Token': token }, body: JSON.stringify(body || {}), cache: 'no-store' });
+  let j = null; try { j = await r.json(); } catch (e) {}
+  if (r.status === 401) { const err = new Error((j && j.error) || 'auth'); err.auth = true; err.needsSetup = !!(j && j.needsSetup); throw err; }
+  if (!r.ok || !j || j.ok === false) { const err = new Error((j && j.error) || ('HTTP ' + r.status)); err.status = r.status; err.body = j; throw err; }
+  return j;
+}
+function applyQueue() {
+  for (const q of queue) {
+    if (q.coll === 'settings') Object.assign(S.settings, q.data);
+    else if (q.data) S[q.coll][q.id] = { ...q.data, id: q.id };
+    else delete S[q.coll][q.id];
+  }
+}
+let pulling = false;
+async function pull() {
+  if (pulling || !token) return; pulling = true;
+  try {
+    await flush();
+    const j = await api('all');
+    for (const c of ['students', 'lessons', 'charges']) { S[c] = {}; for (const id in (j[c] || {})) S[c][id] = { ...j[c][id], id }; }
+    if (j.settings) Object.assign(S.settings, j.settings);
+    applyQueue();
+    S.online = true; S.ready = true; cacheSave(); render(); refreshSheetView(); scheduleEnsure();
+  } catch (e) {
+    if (e.auth) gate(e.needsSetup); else { S.online = false; render(); }
+  }
+  pulling = false;
+}
+let flushing = false;
+async function flush() {
+  if (flushing || !queue.length || !token) return; flushing = true;
+  try {
+    while (queue.length) {
+      const batch = queue.slice(0, 100);
+      await api('batch', { ops: batch });
+      queue.splice(0, batch.length); cacheSave();
+    }
+    S.online = true;
+  } catch (e) { if (e.auth) gate(e.needsSetup); else S.online = false; }
+  flushing = false; render();
+}
+let flushT;
+const soonFlush = () => { clearTimeout(flushT); flushT = setTimeout(flush, 400); };
+function save(coll, id, data, quiet) {
+  if (data) S[coll][id] = { ...data, id }; else delete S[coll][id];
+  const body = data ? { ...data } : null; if (body) { delete body.id; delete body._u; }
+  queue = queue.filter(q => !(q.coll === coll && q.id === id));
+  queue.push({ coll, id, data: body });
+  cacheSave();
+  if (!quiet) { render(); refreshSheetView(); }
+  soonFlush();
+}
+function saveSettings(patch) {
+  Object.assign(S.settings, patch);
+  queue = queue.filter(q => q.coll !== 'settings');
+  queue.push({ coll: 'settings', id: 'main', data: { ...S.settings } });
+  cacheSave(); render(); soonFlush();
+}
+
+/* ---------- sign-in screen ---------- */
+function gate(setup) {
+  const g = $('#gate'); if (!g) return;
+  if (!g.hidden && g.dataset.setup === String(!!setup)) return;
+  g.dataset.setup = String(!!setup);
+  g.innerHTML = `<form id="gate-form" novalidate>
+    <svg width="44" height="44" viewBox="0 0 28 28" aria-hidden="true"><rect x="1" y="1" width="26" height="26" rx="8" fill="var(--accent)"/><g stroke="var(--accent-ink)" stroke-width="1.4" stroke-linecap="round"><path d="M8 6v16M12 6v16M16 6v16M20 6v16" opacity=".9"/><path d="M6 11h16M6 17h16" stroke-width="1"/></g><circle cx="16" cy="14" r="2.4" fill="var(--accent-ink)"/></svg>
+    <h2>${setup ? 'יצירת סיסמה' : 'כניסה ליומן'}</h2>
+    <p>${setup ? 'זו הפעם הראשונה. בחרו סיסמה של 8 תווים לפחות. היא תשמש לכניסה מכל מכשיר.' : 'הזינו את הסיסמה של יומן השיעורים.'}</p>
+    <label class="f">סיסמה<input id="lg-pass" type="password" autocomplete="${setup ? 'new-password' : 'current-password'}" required></label>
+    ${setup ? '<label class="f">שוב את הסיסמה<input id="lg-pass2" type="password" autocomplete="new-password" required></label>' : ''}
+    <div class="gate-err" id="lg-err" role="alert"></div>
+    <button class="btn primary" type="submit">${setup ? 'יצירה וכניסה' : 'כניסה'}</button>
+  </form>`;
+  g.hidden = false;
+  setTimeout(() => $('#lg-pass') && $('#lg-pass').focus(), 50);
+}
+document.addEventListener('submit', async e => {
+  if (e.target.id !== 'gate-form') return;
+  e.preventDefault();
+  const p = $('#lg-pass').value, p2 = $('#lg-pass2'), err = $('#lg-err'), btn = e.target.querySelector('button');
+  if (p2 && p.length < 8) { err.textContent = 'הסיסמה צריכה להיות באורך 8 תווים לפחות.'; return; }
+  if (p2 && p !== p2.value) { err.textContent = 'הסיסמאות לא זהות.'; return; }
+  btn.disabled = true; err.textContent = '';
+  try {
+    const j = await api(p2 ? 'setup' : 'login', { password: p });
+    token = j.token; try { localStorage.setItem(TKEY, token); } catch (_) {}
+    $('#gate').hidden = true; $('#gate').innerHTML = '';
+    await pull(); toast('נכנסת ליומן');
+  } catch (x) {
+    err.textContent = x.status === 429 ? 'יותר מדי ניסיונות. נסו שוב בעוד כמה דקות.' : x.auth ? 'הסיסמה שגויה.' : 'אין חיבור לשרת. בדקו את האינטרנט ונסו שוב.';
+  }
+  btn.disabled = false;
+});
+/* ---------- phone notifications ---------- */
+function urlB64ToUint8(b) { const p = '='.repeat((4 - b.length % 4) % 4), r = atob((b + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from([...r].map(c => c.charCodeAt(0))); }
+async function enablePush() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) { toast('הדפדפן הזה לא תומך בהתראות. בטלפון אנדרואיד פתחו ב־Chrome.'); return; }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') { toast('ההתראות חסומות. אפשר לאשר אותן בהגדרות האתר ב־Chrome.'); return; }
+    const reg = await navigator.serviceWorker.ready;
+    const { key } = await api('push-key');
+    let sub = await reg.pushManager.getSubscription();
+    if (sub) { const cur = sub.options && sub.options.applicationServerKey; if (cur && btoa(String.fromCharCode(...new Uint8Array(cur))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') !== key) { await sub.unsubscribe(); sub = null; } }
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: urlB64ToUint8(key) });
+    await api('subscribe', { subscription: sub.toJSON() });
+    S.pushOn = true; render(); toast('ההתראות הופעלו במכשיר הזה');
+  } catch (e) { toast('לא הצלחתי להפעיל התראות: ' + (e.message || e)); }
+}
+async function disablePush() {
+  try {
+    const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.getSubscription();
+    if (sub) { try { await api('unsubscribe', { subscription: sub.toJSON() }); } catch (e) {} await sub.unsubscribe(); }
+  } catch (e) {}
+  S.pushOn = false; render(); toast('ההתראות כובו במכשיר הזה');
+}
+function checkPush() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  navigator.serviceWorker.ready.then(r => r.pushManager.getSubscription()).then(sub => {
+    S.pushOn = !!sub && typeof Notification !== 'undefined' && Notification.permission === 'granted';
+    if (sub && S.pushOn && token) api('subscribe', { subscription: sub.toJSON() }).catch(() => {});
+    render();
+  }).catch(() => {});
+}
+function routeHash() { if (location.hash === '#confirm') { UI.tab = 'schedule'; UI.day = today(); closeSheet(); render(); window.scrollTo(0, 0); } }
+window.addEventListener('hashchange', routeHash);
+
+async function init() {
+  routeHash(); checkPush();
+  const had = cacheLoad(); applyQueue();
+  if (had) { S.ready = true; render(); scheduleEnsure(); } else render();
+  if (!token) {
+    try { const j = await api('status'); gate(j.needsSetup); } catch (e) { gate(false); }
+    return;
+  }
+  pull();
+}
+window.addEventListener('online', () => pull());
+document.addEventListener('visibilitychange', () => { if (!document.hidden) pull(); });
+setInterval(() => { if (!document.hidden) pull(); }, 60000);
+if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+function downloadFile(name, text, type) {
+  const b = new Blob([text], { type }), a = document.createElement('a');
+  a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 2000);
+}
+
+/* ---------- toast ---------- */
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 2600); }
+
+/* ---------- render ---------- */
+function render() {
+  document.querySelectorAll('.nav [data-tab]').forEach(b => { if (b.dataset.tab === UI.tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  $('#fab').hidden = UI.tab === 'money';
+  $('#fab').lastChild.textContent = UI.tab === 'students' ? 'תלמיד' : 'שיעור';
+  $('#fab').dataset.act = UI.tab === 'students' ? 'new-student' : 'new-lesson';
+  $('#sync').textContent = !S.ready ? '' : queue.length ? (S.online === false ? `לא מחובר · ${queue.length} ממתינים` : 'שומר…') : S.online === false ? 'לא מחובר' : S.online ? 'מסונכרן' : '';
+  const v = $('#view');
+  if (!S.ready) { v.innerHTML = '<div class="empty"><b>פותח את היומן…</b></div>'; return; }
+  let html = exampleBanner();
+  html += UI.tab === 'schedule' ? viewSchedule() : UI.tab === 'students' ? viewStudents() : viewMoney();
+  v.innerHTML = html;
+  updateBadge();
+}
+function exampleBanner() {
+  const n = Object.values(S.students).filter(s => s.example).length;
+  if (!n) return '';
+  return `<div class="banner"><p><b>נתוני דוגמה.</b> ${n} התלמידים והשיעורים האלה הם דוגמאות כדי לנסות את האפליקציה.</p><button class="btn" type="button" data-act="clear-examples">ניקוי דוגמאות</button></div>`;
+}
+
+/* confirmations */
+const RWHEN = { same: 'ביום השיעור', before: 'יום לפני', none: 'בלי תזכורת' };
+const CONF = { '': 'טרם נשלחה תזכורת', sent: 'נשלחה תזכורת', yes: 'אישר הגעה', no: 'ביטל' };
+const remindWhen = s => (s && RWHEN[s.remindWhen]) ? s.remindWhen : 'same';
+function remindAt(l) {
+  const w = remindWhen(S.students[l.studentId]); if (w === 'none') return null;
+  const [h, m] = String(w === 'before' ? (S.settings.remindBeforeAt || '21:00') : (S.settings.remindSameAt || '10:00')).split(':').map(Number);
+  const d = fromYmd(w === 'before' ? addDays(l.date, -1) : l.date); d.setHours(h || 0, m || 0, 0, 0); return d.getTime();
+}
+function dueConfirmations() {
+  const t = today(), tm = addDays(t, 1);
+  return Object.values(S.lessons).filter(l => {
+    if (l.status === 'cancelled' || l.confirm === 'yes' || l.confirm === 'no') return false;
+    if (l.date < t || l.date > tm) return false;
+    if (l.date === t && toMin(l.time) + num(l.duration) <= nowMin()) return false;
+    const at = remindAt(l); return at !== null && at <= Date.now();
+  }).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+}
+function confirmBlock() {
+  const due = dueConfirmations();
+  if (!due.length) return '';
+  const t = today();
+  return `<section class="confirm card">
+    <div class="row between" style="padding:12px 14px 4px"><b>לאישור הגעה</b><span class="muted" style="font-size:13px">${due.length === 1 ? 'שיעור אחד' : due.length + ' שיעורים'}</span></div>
+    ${due.map(l => {
+      const s = S.students[l.studentId] || {};
+      const sent = l.confirm === 'sent';
+      return `<div class="crow">
+        <div class="cmain"><b>${esc(s.name || 'תלמיד')}</b><span class="muted">${l.date === t ? 'היום' : 'מחר'} ב־${esc(l.time)} · ${sent ? 'נשלחה תזכורת, ממתין לתשובה' : 'עוד לא נשלחה תזכורת'}</span></div>
+        <div class="cacts">
+          <button type="button" class="btn ${sent ? '' : 'primary'}" data-act="confirm-send" data-id="${esc(l.id)}">${sent ? 'שוב' : 'שליחה'}</button>
+          <button type="button" class="icon-btn ok" data-act="confirm-yes" data-id="${esc(l.id)}" aria-label="אישר הגעה">✓</button>
+          <button type="button" class="icon-btn no" data-act="confirm-no" data-id="${esc(l.id)}" aria-label="ביטל">✕</button>
+        </div>
+      </div>`;
+    }).join('')}
+  </section>`;
+}
+function updateBadge() {
+  const n = S.ready ? dueConfirmations().filter(l => l.confirm !== 'sent').length : 0;
+  const tab = document.querySelector('.nav [data-tab="schedule"]');
+  if (tab) { let b = tab.querySelector('.badge'); if (n) { if (!b) { b = document.createElement('span'); b.className = 'badge'; tab.appendChild(b); } b.textContent = n; } else if (b) b.remove(); }
+  try { if (navigator.setAppBadge) n ? navigator.setAppBadge(n) : navigator.clearAppBadge(); } catch (e) {}
+}
+
+/* schedule */
+function viewSchedule() {
+  const ws = weekStartOf(UI.day), days = [...Array(7)].map((_, i) => addDays(ws, i)), we = days[6], t = today();
+  const all = Object.values(S.lessons);
+  const wk = all.filter(l => l.date >= ws && l.date <= we);
+  const live = wk.filter(l => l.status !== 'cancelled');
+  const wkVal = live.reduce((a, l) => a + num(l.price), 0);
+  const wkOwed = wk.reduce((a, l) => a + owedOf(l), 0);
+  const d0 = fromYmd(ws), d6 = fromYmd(we);
+  const range = d0.getMonth() === d6.getMonth() ? `${d0.getDate()}–${d6.getDate()} ב${MONL[d6.getMonth()]}` : `${fmtD(ws)} – ${fmtD(we)}`;
+  let h = confirmBlock() + `<div class="weekbar">
+    <button class="icon-btn" type="button" data-act="week" data-n="-7" aria-label="השבוע הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="title">${range}</div>
+    ${UI.day !== t ? '<button class="btn ghost" type="button" data-act="go-today">היום</button>' : ''}
+    <button class="icon-btn" type="button" data-act="week" data-n="7" aria-label="השבוע הבא"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </div><div class="strip">`;
+  for (const d of days) {
+    const ls = all.filter(l => l.date === d).sort((a, b) => toMin(a.time) - toMin(b.time));
+    const dots = ls.slice(0, 4).map(l => { const s = lessonState(l); return `<i class="${s === 'paid' ? 'paid' : s === 'owed' || s === 'partial' ? 'owed' : s === 'off' ? 'off' : ''}"></i>`; }).join('');
+    const dd = fromYmd(d);
+    h += `<button type="button" class="dchip${d === t ? ' today' : ''}${d === UI.day ? ' sel' : ''}" data-act="day" data-d="${d}" aria-label="יום ${WDL[dd.getDay()]} ${dd.getDate()}, ${ls.length} שיעורים"><span class="wd">${WD[dd.getDay()]}</span><span class="dn">${dd.getDate()}</span><span class="dots">${dots}</span></button>`;
+  }
+  h += `</div><div class="summary"><span>השבוע <b>${live.length}</b> שיעורים</span><span>שווי <b>${money(wkVal)}</b></span><span>לא שולם <b class="${wkOwed ? 'owed' : ''}">${money(wkOwed)}</b></span></div>`;
+  const dl = all.filter(l => l.date === UI.day).sort((a, b) => toMin(a.time) - toMin(b.time));
+  const dd = fromYmd(UI.day);
+  h += `<div class="daytitle"><h2>${UI.day === t ? 'היום' : 'יום ' + WDL[dd.getDay()]}, ${dd.getDate()} ב${MONL[dd.getMonth()]}</h2><span class="muted">${dl.length ? (dl.length === 1 ? 'שיעור אחד' : dl.length + ' שיעורים') : ''}</span></div>`;
+  if (!Object.keys(S.students).length) {
+    h += `<div class="card empty"><b>מתחילים מהתלמידים</b><span>מוסיפים כל תלמיד פעם אחת עם המחיר לשיעור. אחרי זה, קביעת שיעור לוקחת שתי הקשות.</span><button class="btn primary" type="button" data-act="new-student">הוספת התלמיד הראשון</button></div>`;
+  } else if (!dl.length) {
+    h += `<div class="card empty"><b>אין שיעורים ביום הזה</b><button class="btn primary" type="button" data-act="new-lesson">הוספת שיעור</button></div>`;
+  } else {
+    h += '<div class="list">' + dl.map(lessonCard).join('') + '</div>';
+  }
+  return h;
+}
+function lessonCard(l) {
+  const st = lessonState(l), past = l.date < today() || (l.date === today() && toMin(l.time) + num(l.duration) <= nowMin());
+  const statusTxt = l.status === 'cancelled' ? 'בוטל' : l.status === 'noshow' ? 'לא הגיע' : past ? 'התקיים' : 'מתוכנן';
+  const payLbl = st === 'paid' ? 'שולם' : st === 'off' ? '—' : st === 'partial' ? 'שולם חלקית' : st === 'owed' ? 'לא שולם' : 'טרם שולם';
+  const payCls = st === 'paid' ? 'is-paid' : st === 'owed' || st === 'partial' ? 'is-owed' : st === 'off' ? 'is-off' : '';
+  const cf = l.status !== 'cancelled' && !past ? (l.confirm === 'yes' ? '✓ אישר' : l.confirm === 'sent' ? 'ממתין לאישור' : '') : '';
+  const meta = [statusTxt, cf, l.method && paidOf(l) > 0 ? ML(l.method) : '', l.seriesId || l.recurring ? '↻ שבועי' : ''].filter(Boolean).join(' · ');
+  return `<article class="lesson st-${st}" data-act="edit-lesson" data-id="${esc(l.id)}" tabindex="0">
+    <div class="l-time"><b>${esc(l.time || '--:--')}</b><span>${num(l.duration)} דק׳</span></div>
+    <div class="l-main"><div class="l-name">${esc(studentName(l.studentId))}</div><div class="l-meta">${esc(meta)}</div>${l.note ? `<div class="l-note">${esc(l.note)}</div>` : ''}</div>
+    <button type="button" class="pay ${payCls}" data-act="toggle-pay" data-id="${esc(l.id)}" ${st === 'off' ? 'disabled' : ''} aria-label="${payLbl}, הקשה לשינוי"><b>${money(num(l.price))}</b><small>${payLbl}</small></button>
+  </article>`;
+}
+const nowMin = () => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); };
+
+/* students */
+function viewStudents() {
+  const list = Object.values(S.students).filter(s => (UI.showArchived || !s.archived) && (!UI.q || s.name.toLowerCase().includes(UI.q.toLowerCase()))).sort((a, b) => a.name.localeCompare(b.name));
+  const archived = Object.values(S.students).filter(s => s.archived).length;
+  let h = `<input class="search" id="q" type="search" placeholder="חיפוש תלמיד" value="${esc(UI.q)}" aria-label="חיפוש תלמיד">`;
+  if (!Object.keys(S.students).length) return h + `<div class="card empty"><b>עדיין אין תלמידים</b><span>מוסיפים תלמיד עם המחיר, משך השיעור והמועד השבועי.</span><button class="btn primary" type="button" data-act="new-student">הוספת תלמיד</button></div>`;
+  h += '<div class="list">' + (list.map(s => {
+    const o = owedFor(s.id);
+    const slot = s.slotDay >= 0 && s.slotDay !== '' && s.slotDay != null ? ` · ${s.recurring ? '↻ ' : ''}${WD[s.slotDay]} ${esc(s.slotTime || '')}` : '';
+    return `<button type="button" class="stu" data-act="view-student" data-id="${esc(s.id)}"><span class="ava">${esc(initials(s.name))}</span>
+      <span class="mid"><span class="nm" style="display:block">${esc(s.name)}</span><span class="sub">${money(num(s.rate))} / ${num(s.duration) || 45} דק׳${slot}</span></span>
+      ${s.archived ? '<span class="chip arch">בארכיון</span>' : o > 0 ? `<span class="chip owed">חוב ${money(o)}</span>` : '<span class="chip ok">מסודר</span>'}</button>`;
+  }).join('') || '<div class="card empty">אין תלמידים שמתאימים לחיפוש.</div>') + '</div>';
+  if (archived) h += `<button class="btn ghost" type="button" data-act="toggle-archived">${UI.showArchived ? 'הסתרת' : 'הצגת'} ${archived} בארכיון</button>`;
+  return h;
+}
+
+/* money */
+function viewMoney() {
+  const [y, m] = UI.month.split('-').map(Number);
+  const ml = Object.values(S.lessons).filter(l => l.date.slice(0, 7) === UI.month);
+  const held = ml.filter(charged);
+  const extras = Object.values(S.charges).filter(c => (c.date || '').slice(0, 7) === UI.month && c.kind !== 'debt');
+  const extraVal = extras.reduce((a, c) => a + num(c.amount), 0);
+  const earned = held.reduce((a, l) => a + num(l.price), 0) + extraVal;
+  const collected = ml.reduce((a, l) => a + (l.status === 'cancelled' ? 0 : paidOf(l)), 0) + extras.reduce((a, c) => a + num(c.paid), 0);
+  const owedMonth = held.reduce((a, l) => a + owedOf(l), 0) + extras.reduce((a, c) => a + chargeOwed(c), 0);
+  const upcoming = ml.filter(l => l.status !== 'cancelled' && l.date > today());
+  const upVal = upcoming.reduce((a, l) => a + num(l.price), 0);
+  const hours = held.reduce((a, l) => a + num(l.duration), 0) / 60;
+  const pct = earned ? Math.min(100, Math.round(Math.min(collected, earned) / earned * 100)) : 0;
+  let h = `<div class="weekbar">
+    <button class="icon-btn" type="button" data-act="month" data-n="-1" aria-label="החודש הקודם"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="title">${MONL[m - 1]} ${y}</div>
+    <button class="icon-btn" type="button" data-act="month" data-n="1" aria-label="החודש הבא"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  </div>
+  <div class="tiles">
+    <div class="tile"><span>הכנסות</span><b>${money(earned)}</b><small>${held.length} שיעורים${extraVal ? ' + ' + money(extraVal) + ' תוספות' : ''} · ${hours.toFixed(1)} שעות הוראה</small></div>
+    <div class="tile paid"><span>נגבה</span><b>${money(collected)}</b><div class="bar" aria-label="נגבו ${pct}%"><i style="width:${pct}%"></i></div></div>
+    <div class="tile owed"><span>עדיין לא שולם</span><b>${money(owedMonth)}</b><small>מהחודש הזה</small></div>
+    <div class="tile"><span>מתוכנן</span><b>${money(upVal)}</b><small>${upcoming.length} שיעורים קרובים</small></div>
+  </div>`;
+  // who owes (all time)
+  const owers = Object.values(S.students).map(s => ({ s, o: owedFor(s.id), n: lessonsOf(s.id).filter(l => owedOf(l) > 0).length, c: chargesOf(s.id).filter(c => chargeOwed(c) > 0).length })).filter(x => x.o > 0).sort((a, b) => b.o - a.o);
+  const oweTxt = x => [x.n ? (x.n === 1 ? 'שיעור פתוח' : `${x.n} שיעורים פתוחים`) : '', x.c ? (x.c === 1 ? 'חיוב פתוח' : `${x.c} חיובים פתוחים`) : ''].filter(Boolean).join(' + ');
+  const totalOwed = owers.reduce((a, x) => a + x.o, 0);
+  h += `<div class="row between"><h2 class="h2">מי חייב לך</h2><span class="num muted">סה״כ ${money(totalOwed)}</span></div>`;
+  h += owers.length ? '<div class="card">' + owers.map(x => `<button type="button" class="oweline" data-act="view-student" data-id="${esc(x.s.id)}"><span class="ava">${esc(initials(x.s.name))}</span><span class="mid"><b>${esc(x.s.name)}</b><br><span class="muted" style="font-size:13px">${oweTxt(x)}</span></span><span class="chip owed">${money(x.o)}</span></button>`).join('') + '</div>'
+    : '<div class="card empty"><b>כולם שילמו</b></div>';
+  // per student this month
+  const by = {};
+  for (const l of ml) { if (l.status === 'cancelled') continue; const r = by[l.studentId] ||= { n: 0, e: 0, x: 0, p: 0, o: 0 }; r.n++; if (charged(l)) r.e += num(l.price); r.p += paidOf(l); r.o += owedOf(l); }
+  for (const c of extras) { const r = by[c.studentId] ||= { n: 0, e: 0, x: 0, p: 0, o: 0 }; r.x += num(c.amount); r.p += num(c.paid); r.o += chargeOwed(c); }
+  const rows = Object.entries(by).sort((a, b) => (b[1].e + b[1].x) - (a[1].e + a[1].x));
+  h += `<h2 class="h2">לפי תלמיד, ${MONL[m - 1]}</h2>`;
+  h += rows.length ? `<div class="card tbl-wrap"><table><thead><tr><th>תלמיד</th><th>שיעורים</th><th>הכנסה</th><th>תוספות</th><th>שולם</th><th>חוב</th></tr></thead><tbody>${rows.map(([id, r]) => `<tr><td>${esc(studentName(id))}</td><td class="num">${r.n}</td><td class="num">${money(r.e)}</td><td class="num">${r.x ? money(r.x) : '–'}</td><td class="num">${money(r.p)}</td><td class="num ${r.o ? 'owed' : ''}">${money(r.o)}</td></tr>`).join('')}</tbody></table></div>`
+    : '<div class="card empty">אין שיעורים החודש.</div>';
+  h += `<div class="actions"><button class="btn" type="button" data-act="export">ייצוא ${MONL[m - 1]} לגיליון (CSV)</button></div>`;
+  // settings
+  h += `<h2 class="h2">הגדרות</h2><div class="card settings">
+    <label class="f">סימן מטבע<input id="set-cur" value="${esc(S.settings.currency)}" maxlength="4"></label>
+    <label class="f">קידומת מדינה<input id="set-cc" inputmode="numeric" value="${esc(S.settings.cc)}" maxlength="4"></label>
+    <label class="f">אמצעי תשלום רגיל<select id="set-method">${METHODS.map(x => `<option ${x === S.settings.method ? 'selected' : ''} value="${x}">${ML(x)}</option>`).join('')}</select></label>
+    <label class="f">השבוע מתחיל ביום<select id="set-ws"><option value="0" ${+S.settings.weekStart === 0 ? 'selected' : ''}>ראשון</option><option value="1" ${+S.settings.weekStart === 1 ? 'selected' : ''}>שני</option></select></label>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:12px;padding:14px">
+    <b>התראות לאישור הגעה</b>
+    <div class="fields">
+      <label class="f">תלמידים של "יום לפני"<input id="set-rbefore" type="time" step="300" value="${esc(S.settings.remindBeforeAt || '21:00')}"></label>
+      <label class="f">תלמידים של "ביום השיעור"<input id="set-rsame" type="time" step="300" value="${esc(S.settings.remindSameAt || '10:00')}"></label>
+    </div>
+    <div class="muted" style="font-size:13px">${S.pushOn ? '✓ ההתראות פעילות במכשיר הזה. בשעות האלה תקבלו התראה בטלפון עם רשימת התלמידים שצריך לשלוח להם תזכורת.' : 'הפעילו התראות כדי לקבל בשעות האלה התראה בטלפון, גם כשהאפליקציה סגורה.'}</div>
+    <div class="actions">
+      ${S.pushOn ? '<button class="btn" type="button" data-act="push-test">שליחת התראת בדיקה</button><button class="btn ghost" type="button" data-act="push-off">כיבוי במכשיר הזה</button>' : '<button class="btn primary" type="button" data-act="push-on">הפעלת התראות בטלפון</button>'}
+    </div>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:12px;padding:14px">
+    <b>נוסח תזכורת לשיעור</b>
+    <label class="f">נושא האימייל<input id="set-rsubj" value="${esc(S.settings.remindSubj || DEF_SUBJ)}"></label>
+    <label class="f">ההודעה<textarea id="set-rtpl" style="min-height:110px">${esc(S.settings.remindTpl || DEF_TPL)}</textarea></label>
+    <div class="muted" style="font-size:13px">אפשר להשתמש ב: {שם} {תלמיד} {יום} {תאריך} {שעה} {משך} {מחיר}</div>
+    <div><button class="btn ghost" type="button" data-act="reset-tpl">החזרת הנוסח המקורי</button></div>
+  </div>
+  <div class="card"><p class="muted" style="font-size:13px;margin:0;padding:14px 14px 10px">הנתונים נשמרים בשרת שלך ומסתנכרנים בין כל המכשירים. השרת שומר גם גיבוי אוטומטי כל יום.</p>
+  <div class="setrow">
+    <button class="btn" type="button" data-act="backup">הורדת גיבוי</button>
+    <button class="btn" type="button" data-act="restore">ייבוא מקובץ גיבוי</button>
+    <button class="btn ghost" type="button" data-act="logout">יציאה מהמכשיר הזה</button>
+  </div><input type="file" id="restore-file" accept=".json,application/json" hidden></div>`;
+  return h;
+}
+
+/* ---------- sheets ---------- */
+function openSheet(kind, data = {}) { UI.sheet = { kind, ...data }; drawSheet(true); }
+function closeSheet() { UI.sheet = null; $('#sheetRoot').innerHTML = ''; }
+function refreshSheetView() { if (UI.sheet && UI.sheet.kind === 'student') drawSheet(); }
+function drawSheet(fresh) {
+  const sh = UI.sheet; if (!sh) return;
+  const old = $('#sheetRoot .sheet'), top = old && !fresh ? old.scrollTop : 0;
+  const body = sh.kind === 'lesson' ? lessonForm(sh) : sh.kind === 'student-form' ? studentForm(sh) : sh.kind === 'charge' ? chargeForm(sh) : studentView(sh);
+  $('#sheetRoot').innerHTML = `<div class="scrim" data-act="scrim"><div class="sheet${fresh ? ' anim' : ''}" role="dialog" aria-modal="true">${'<div class="grab"></div>' + body}</div></div>`;
+  if (top) $('#sheetRoot .sheet').scrollTop = top;
+  if (sh.kind === 'lesson') lessonFormLive();
+  if (sh.kind === 'student-form') studentFormLive();
+  if (sh.kind === 'charge') chargeFormLive();
+}
+function backOrClose() { const b = UI.sheet && UI.sheet.back; if (b) openSheet(b.kind, { id: b.id }); else closeSheet(); }
+const closeBtn = '<button class="icon-btn" type="button" data-act="close" aria-label="סגירה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>';
+
+function lessonForm(sh) {
+  const l = sh.id ? S.lessons[sh.id] : null;
+  const studs = Object.values(S.students).filter(s => !s.archived || (l && s.id === l.studentId)).sort((a, b) => a.name.localeCompare(b.name));
+  const pre = sh.studentId || l?.studentId || '';
+  const st = pre ? S.students[pre] : null;
+  const date = l?.date || sh.date || UI.day;
+  let time = l?.time || (st && +st.slotDay === fromYmd(date).getDay() && st.slotTime) || '16:00';
+  const dur = l ? num(l.duration) : (st ? num(st.duration) || 45 : 45);
+  const price = l ? num(l.price) : (st ? num(st.rate) : '');
+  const status = l?.status || 'ok';
+  return `<div class="row"><h3>${l ? 'עריכת שיעור' : 'שיעור חדש'}</h3>${closeBtn}</div>
+  <form id="lf" class="fields" novalidate>
+    <label class="f full">תלמיד<select id="lf-student" required><option value="">בחירת תלמיד…</option>${studs.map(s => `<option value="${esc(s.id)}" ${s.id === pre ? 'selected' : ''}>${esc(s.name)}</option>`).join('')}<option value="__new">+ תלמיד חדש…</option></select></label>
+    <label class="f">תאריך<input id="lf-date" type="date" value="${date}" required></label>
+    <label class="f">שעת התחלה<input id="lf-time" type="time" value="${esc(time)}" step="300" required></label>
+    <label class="f">משך<select id="lf-dur">${[30, 45, 60, 75, 90, 120].map(x => `<option value="${x}" ${x === dur ? 'selected' : ''}>${x} דק׳</option>`).join('')}</select></label>
+    <label class="f">מחיר (${esc(S.settings.currency)})<input id="lf-price" type="number" inputmode="decimal" min="0" step="any" value="${price}"></label>
+    ${l ? `<div class="f full"><span>מה קרה</span><div class="seg" role="radiogroup">
+      ${[['ok', 'שיעור'], ['noshow', 'לא הגיע'], ['cancelled', 'בוטל']].map(([v, t]) => `<label><input type="radio" name="lf-status" value="${v}" ${status === v ? 'checked' : ''}><span>${t}</span></label>`).join('')}
+    </div></div>` : `<label class="f full">חזרה<select id="lf-repeat"><option value="once">פעם אחת בלבד</option><option value="weekly">כל שבוע באותו יום ושעה</option></select></label>`}
+    <label class="f">סכום ששולם (${esc(S.settings.currency)})<input id="lf-paid" type="number" inputmode="decimal" min="0" step="any" value="${l ? paidOf(l) || '' : ''}" placeholder="0"></label>
+    <label class="f">אמצעי תשלום<select id="lf-method">${METHODS.map(x => `<option ${x === (l?.method || S.settings.method) ? 'selected' : ''} value="${x}">${ML(x)}</option>`).join('')}</select></label>
+    <div class="full actions"><button type="button" class="btn" data-act="paid-full">שולם במלואו</button><button type="button" class="btn ghost" data-act="paid-none">לא שולם</button></div>
+    ${l ? `<label class="f full">אישור הגעה<select id="lf-confirm">${Object.entries(CONF).map(([k, v]) => `<option value="${k}" ${(l.confirm || '') === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>` : ''}
+    <label class="f full">הערות לשיעור<textarea id="lf-note" placeholder="על מה עבדנו, שיעורי בית, שירים…">${esc(l?.note || '')}</textarea></label>
+    <div id="lf-warn" class="warn full" hidden></div>
+  </form>
+  ${l ? `<button type="button" class="btn" data-act="charge-for-lesson">＋ חיוב נוסף לשיעור הזה (זמן נוסף, מיתרים…)</button>` : ''}
+  <div class="actions">
+    ${l ? `<button type="button" class="btn danger" data-act="del-lesson">מחיקה</button>` : ''}
+    <button type="button" class="btn primary grow" data-act="save-lesson">${l ? 'שמירה' : 'הוספת שיעור'}</button>
+  </div>
+  ${l && l.seriesId ? `<button type="button" class="btn ghost danger" data-act="del-series" style="border-color:transparent">מחיקת השיעור הזה וכל השיעורים הבאים בסדרה</button>` : ''}
+  ${l && l.status !== 'cancelled' && (l.date + l.time) >= (today() + '00:00') ? `<button type="button" class="btn" data-act="lesson-remind">שליחת תזכורת לשיעור הזה</button>` : ''}
+  ${l && S.students[l.studentId]?.recurring ? `<button type="button" class="btn ghost danger" data-act="stop-after" style="border-color:transparent">הפסקת השיעורים השבועיים אחרי השיעור הזה</button>` : ''}`;
+}
+function lessonFormLive() {
+  const f = $('#lf'); if (!f) return;
+  const sel = $('#lf-student');
+  const check = () => {
+    const w = $('#lf-warn'), d = $('#lf-date').value, t = toMin($('#lf-time').value), du = num($('#lf-dur').value);
+    const clash = Object.values(S.lessons).find(l => l.id !== UI.sheet.id && l.date === d && l.status !== 'cancelled' && toMin(l.time) < t + du && t < toMin(l.time) + num(l.duration));
+    w.hidden = !clash; if (clash) w.textContent = `חופף לשיעור של ${studentName(clash.studentId)} ב־${clash.time}.`;
+  };
+  sel.addEventListener('change', () => {
+    if (sel.value === '__new') { UI.returnToLesson = { date: $('#lf-date').value }; openSheet('student-form'); return; }
+    const s = S.students[sel.value]; if (!s) return;
+    if (!UI.sheet.id) {
+      $('#lf-dur').value = String(num(s.duration) || 45); $('#lf-price').value = num(s.rate) || '';
+      if (s.slotTime && +s.slotDay === fromYmd($('#lf-date').value).getDay()) $('#lf-time').value = s.slotTime;
+    }
+    check();
+  });
+  $('#lf-dur').addEventListener('change', () => {
+    const s = S.students[sel.value];
+    if (s && num(s.rate) && num(s.duration)) $('#lf-price').value = Math.round(num(s.rate) * num($('#lf-dur').value) / num(s.duration));
+    check();
+  });
+  $('#lf-date').addEventListener('change', check); $('#lf-time').addEventListener('change', check);
+  check();
+}
+function saveLesson() {
+  const sid = $('#lf-student').value, date = $('#lf-date').value, time = $('#lf-time').value;
+  if (!sid || sid === '__new') return toast('יש לבחור תלמיד.');
+  if (!date || !time) return toast('יש לבחור תאריך ושעת התחלה.');
+  const base = { studentId: sid, time, duration: num($('#lf-dur').value), price: num($('#lf-price').value), paid: num($('#lf-paid').value), method: $('#lf-method').value, note: $('#lf-note').value.trim() };
+  if (base.paid > 0 && base.method !== S.settings.method) saveSettings({ method: base.method });
+  const ex = UI.sheet.id ? S.lessons[UI.sheet.id] : null;
+  if (ex) {
+    const status = (document.querySelector('input[name="lf-status"]:checked') || {}).value || 'ok';
+    const rec = { ...ex, ...base, date, status, confirm: $('#lf-confirm') ? $('#lf-confirm').value : (ex.confirm || '') };
+    if (rec.confirm === 'no' && rec.status === 'ok') rec.status = 'cancelled';
+    if (ex.recurring && (date !== ex.date || time !== ex.time)) { skipDate(ex.studentId, ex.date); rec.recurring = false; }
+    save('lessons', ex.id, rec);
+    toast('השיעור נשמר');
+  } else if ($('#lf-repeat')?.value === 'weekly') {
+    const s = S.students[sid], wasOn = !!s.recurring;
+    save('lessons', 'r-' + sid + '-' + date, { ...base, date, status: 'ok', recurring: true, created: Date.now() }, true);
+    save('students', sid, { ...s, recurring: true, slotDay: fromYmd(date).getDay(), slotTime: time, duration: base.duration, rate: num(s.rate) || base.price, recurFrom: date, archived: false }, true);
+    if (wasOn) reflowWeekly(sid); else scheduleEnsure();
+    UI.day = date;
+    toast(`נקבע כל יום ${WDL[fromYmd(date).getDay()]} ב־${time}`);
+  } else {
+    save('lessons', uid(), { ...base, date, status: 'ok', created: Date.now() });
+    UI.day = date;
+    toast('השיעור נוסף');
+  }
+  backOrClose(); render();
+}
+
+function studentForm(sh) {
+  const s = sh.id ? S.students[sh.id] : null;
+  const weekly = sh.weekly || !!s?.recurring;
+  const from = s?.recurring && s.recurFrom && s.recurFrom > today() ? s.recurFrom : nextSlotDate(s);
+  return `<div class="row"><h3>${s ? 'עריכת תלמיד' : 'תלמיד חדש'}</h3>${closeBtn}</div>
+  <form id="sf" class="fields" novalidate>
+    <div class="full import">
+      <button type="button" class="btn grow" data-act="pick-contact">${IC.user}בחירה מאנשי הקשר</button>
+      <button type="button" class="btn" data-act="paste-contact">הדבקה</button>
+      <input type="file" id="sf-vcf" accept=".vcf,text/vcard,text/x-vcard" hidden>
+    </div>
+    <div class="full" id="sf-paste-wrap" hidden style="display:flex;flex-direction:column;gap:8px">
+      <label class="f">הדביקו כאן פרטי איש קשר (שם, טלפון, אימייל)<textarea id="sf-paste" placeholder="דנה כהן&#10;050-123-4567&#10;dana@example.com"></textarea></label>
+      <button type="button" class="btn primary" data-act="apply-paste">מילוי הפרטים</button>
+    </div>
+    <label class="f full">שם<input id="sf-name" value="${esc(s?.name || '')}" autocomplete="off" required></label>
+    <div class="groupttl full">פרטי קשר</div>
+    <label class="f">טלפון<input id="sf-phone" type="tel" inputmode="tel" value="${esc(s?.phone || '')}" placeholder="050-123-4567"></label>
+    <label class="f">וואטסאפ, אם שונה<input id="sf-wa" type="tel" inputmode="tel" value="${esc(s?.whatsapp || '')}" placeholder="כמו הטלפון"></label>
+    <label class="f full">אימייל<input id="sf-email" type="email" inputmode="email" autocomplete="off" value="${esc(s?.email || '')}" placeholder="name@example.com"></label>
+    <label class="f full">איש קשר<input id="sf-contact" value="${esc(s?.contactName || '')}" placeholder="למשל אמא – דנה (ריק אם זה התלמיד עצמו)"></label>
+    <div class="groupttl full">שיעורים</div>
+    <label class="f">מחיר לשיעור (${esc(S.settings.currency)})<input id="sf-rate" type="number" inputmode="decimal" min="0" step="any" value="${s ? num(s.rate) : ''}"></label>
+    <label class="f">משך רגיל<select id="sf-dur">${[30, 45, 60, 75, 90, 120].map(x => `<option value="${x}" ${x === (s ? num(s.duration) : 45) ? 'selected' : ''}>${x} דק׳</option>`).join('')}</select></label>
+    <label class="f">יום קבוע<select id="sf-day"><option value="-1">אין יום קבוע</option>${WDL.map((d, i) => `<option value="${i}" ${s && +s.slotDay === i ? 'selected' : ''}>${d}</option>`).join('')}</select></label>
+    <label class="f">שעה קבועה<input id="sf-time" type="time" step="300" value="${esc(s?.slotTime || '')}"></label>
+    <label class="checkrow full"><input type="checkbox" id="sf-weekly" ${weekly ? 'checked' : ''}><span><b>לקבוע את המועד הזה כל שבוע</b><br><span class="muted">השיעורים נוספים אוטומטית, 8 שבועות קדימה.</span></span></label>
+    <label class="f full">תזכורת לאישור הגעה<select id="sf-rwhen">${Object.entries(RWHEN).map(([k, v]) => `<option value="${k}" ${remindWhen(s) === k ? 'selected' : ''}>${v}</option>`).join('')}</select></label>
+    <label class="f full" id="sf-from-wrap" ${weekly ? '' : 'hidden'}>השיעור השבועי הראשון<input id="sf-from" type="date" value="${from}"></label>
+    <label class="f full">הערות<textarea id="sf-note" placeholder="רמה, מטרות, ציוד…">${esc(s?.note || '')}</textarea></label>
+    ${s ? `<label class="checkrow full"><input type="checkbox" id="sf-arch" ${s.archived ? 'checked' : ''}><span>בארכיון (הפסיק ללמוד)</span></label>` : ''}
+  </form>
+  <div class="actions">${s ? '<button type="button" class="btn danger" data-act="del-student">מחיקה</button>' : ''}<button type="button" class="btn primary grow" data-act="save-student">${s ? 'שמירה' : 'הוספת תלמיד'}</button></div>`;
+}
+function studentFormLive() {
+  const w = $('#sf-weekly'), day = $('#sf-day'), wrap = $('#sf-from-wrap'), from = $('#sf-from');
+  const fixFrom = () => { if (+day.value >= 0) from.value = nextSlotDate({ slotDay: +day.value }); };
+  w.addEventListener('change', () => { wrap.hidden = !w.checked; if (w.checked && +day.value < 0) { day.focus(); toast('יש לבחור יום ושעה קבועים'); } });
+  day.addEventListener('change', fixFrom);
+  if (UI.sheet.weekly) { (+day.value < 0 ? day : $('#sf-time')).focus(); }
+}
+function saveStudent() {
+  const name = $('#sf-name').value.trim(); if (!name) return toast('יש להזין את שם התלמיד.');
+  const ex = UI.sheet.id ? S.students[UI.sheet.id] : null, id = ex ? ex.id : uid();
+  const email = $('#sf-email').value.trim();
+  if (email && !/^\S+@\S+\.\S+$/.test(email)) return toast('כתובת האימייל לא נראית שלמה.');
+  const rec = { ...(ex || {}), remindWhen: $('#sf-rwhen').value, name, phone: $('#sf-phone').value.trim(), whatsapp: $('#sf-wa').value.trim(), email, contactName: $('#sf-contact').value.trim(),
+    rate: num($('#sf-rate').value), duration: num($('#sf-dur').value), slotDay: +$('#sf-day').value, slotTime: $('#sf-time').value, note: $('#sf-note').value.trim(), archived: !!($('#sf-arch') && $('#sf-arch').checked) };
+  const weekly = $('#sf-weekly').checked && !rec.archived;
+  if (weekly && (!(rec.slotDay >= 0) || !rec.slotTime)) return toast('לשיעורים שבועיים יש לבחור יום ושעה קבועים.');
+  const wasOn = !!ex?.recurring;
+  rec.recurring = weekly;
+  if (weekly) { rec.recurFrom = $('#sf-from').value || today(); if (!wasOn) rec.skip = []; }
+  if (!ex) rec.created = Date.now();
+  delete rec.id;
+  save('students', id, rec, true);
+  if (wasOn) reflowWeekly(id); else { render(); scheduleEnsure(); }
+  toast(weekly && !wasOn ? `נקבע כל יום ${WDL[rec.slotDay]} ב־${rec.slotTime}` : wasOn && !weekly ? 'השיעורים השבועיים הופסקו' : ex ? 'התלמיד נשמר' : 'התלמיד נוסף');
+  if (UI.returnToLesson) { const r = UI.returnToLesson; UI.returnToLesson = null; openSheet('lesson', { studentId: id, date: r.date }); }
+  else openSheet('student', { id });
+}
+
+const IC = {
+  user: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
+  call: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+  sms: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z"/></svg>',
+  wa: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 9c.3 2.6 2.4 4.7 5 5l1-1.3-2-1-.8.8c-.9-.4-1.5-1-1.8-1.8l.8-.8-1-2z" stroke-width="1.4"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5L12 13l8.5-6.5"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>'
+};
+function contactBlock(s) {
+  const tel = waNumber(s.phone), wa = waNumber(s.whatsapp || s.phone);
+  const btns = [];
+  if (tel) btns.push(`<a class="cbtn" href="tel:+${tel}">${IC.call}<span>חיוג</span></a>`, `<a class="cbtn" href="sms:+${tel}">${IC.sms}<span>SMS</span></a>`);
+  if (wa) btns.push(`<a class="cbtn" href="https://wa.me/${wa}" target="_blank" rel="noopener">${IC.wa}<span>וואטסאפ</span></a>`);
+  const nl = nextLessonOf(s.id);
+  const mailHref = 'mailto:' + esc(s.email || '') + (nl ? `?subject=${encodeURIComponent(lessonSubject(s, nl))}&body=${encodeURIComponent(lessonMsg(s, nl))}` : `?subject=${encodeURIComponent('שיעורי גיטרה')}`);
+  if (s.email) btns.push(`<a class="cbtn" href="${mailHref}">${IC.mail}<span>אימייל</span></a>`);
+  if (!btns.length) return `<div class="contact-empty"><span class="muted">אין טלפון או אימייל.</span><button type="button" class="btn" data-act="edit-student" data-id="${esc(s.id)}">הוספת פרטי קשר</button></div>`;
+  const lines = [];
+  if (s.phone) lines.push(['טלפון', s.phone]);
+  if (s.whatsapp && waNumber(s.whatsapp) !== tel) lines.push(['וואטסאפ', s.whatsapp]);
+  if (s.email) lines.push(['אימייל', s.email]);
+  return `<div class="contact">
+    ${s.contactName ? `<div class="muted" style="font-size:13px">איש קשר: <b style="color:var(--ink)">${esc(s.contactName)}</b></div>` : ''}
+    <div class="cbtns">${btns.join('')}</div>
+    <div class="clines">${lines.map(([k, v]) => `<div class="cline"><span class="muted">${k}</span><span class="cval">${esc(v)}</span><button type="button" class="icon-btn sm" data-act="copy" data-text="${esc(v)}" aria-label="העתקת ${k}">${IC.copy}</button></div>`).join('')}</div>
+  </div>`;
+}
+
+function studentView(sh) {
+  const s = S.students[sh.id]; if (!s) { closeSheet(); return ''; }
+  const ls = lessonsOf(s.id).sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+  const cs = chargesOf(s.id);
+  const held = ls.filter(charged).length;
+  const paidTot = ls.reduce((a, l) => a + (l.status === 'cancelled' ? 0 : paidOf(l)), 0) + cs.reduce((a, c) => a + num(c.paid), 0);
+  const o = owedFor(s.id);
+  const next = ls.filter(l => l.date >= today() && l.status !== 'cancelled').sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))[0];
+  const weeklyOn = s.recurring && s.slotDay >= 0 && s.slotTime;
+  let h = `<div class="row"><span class="ava">${esc(initials(s.name))}</span><h3>${esc(s.name)}</h3>${closeBtn}</div>
+  ${contactBlock(s)}
+  <div class="weekly ${weeklyOn ? 'on' : ''}">
+    <div class="wtxt">${weeklyOn
+      ? `<b>↻ כל יום ${WDL[s.slotDay]} ב־${esc(s.slotTime)}</b><span class="muted">${num(s.duration) || 45} דק׳ · ${money(num(s.rate))}${next ? ' · הבא ' + fmtDW(next.date) : ''}</span>`
+      : `<b>אין שיעור שבועי</b><span class="muted">${money(num(s.rate))} / ${num(s.duration) || 45} דק׳${next ? ' · הבא ' + fmtDW(next.date) + ' ' + esc(next.time) : ''}</span>`}</div>
+    ${weeklyOn
+      ? `<button type="button" class="btn" data-act="make-weekly" data-id="${esc(s.id)}">שינוי</button><button type="button" class="btn danger ${sh.armStop ? 'armed' : ''}" data-act="stop-weekly">${sh.armStop ? 'אישור הפסקה' : 'הפסקה'}</button>`
+      : `<button type="button" class="btn primary" data-act="make-weekly" data-id="${esc(s.id)}">קביעה שבועית</button>`}
+  </div>
+  ${s.note ? `<div style="font-size:14px;white-space:pre-wrap">${esc(s.note)}</div>` : ''}
+  <div class="stats"><div><span>שיעורים</span><b>${held}</b></div><div><span>שולם</span><b>${money(paidTot)}</b></div><div><span>חוב</span><b style="color:${o ? 'var(--owed)' : 'var(--paid)'}">${money(o)}</b></div></div>
+  <div class="actions">
+    <button type="button" class="btn primary grow" data-act="new-lesson-for" data-id="${esc(s.id)}">הוספת שיעור</button>
+    <button type="button" class="btn grow" data-act="new-charge" data-id="${esc(s.id)}">חיוב / חוב</button>
+    <button type="button" class="btn" data-act="edit-student" data-id="${esc(s.id)}">עריכה</button>
+  </div>`;
+  const rl = (sh.lid && S.lessons[sh.lid]) || nextLessonOf(s.id);
+  if (rl || o > 0) h += `<div class="actions">
+    ${rl ? `<button type="button" class="btn grow ${sh.lremind ? 'primary' : ''}" data-act="lremind">תזכורת לשיעור</button>` : ''}
+    ${o > 0 ? `<button type="button" class="btn grow ${sh.remind ? 'primary' : ''}" data-act="remind">תזכורת תשלום</button><button type="button" class="btn grow ${sh.armAll ? 'danger armed' : ''}" data-act="settle-all">${sh.armAll ? 'הקשה נוספת לאישור' : 'סימון הכל כשולם'}</button>` : ''}
+  </div>`;
+  sh.rlid = rl ? rl.id : null;
+  if (sh.lremind && rl) h += `<div class="muted" style="font-size:13px">תזכורת לשיעור ${fmtDW(rl.date)} ב־${esc(rl.time)} · ${CONF[rl.confirm || '']}</div>` +  sendPanel(s, lessonMsg(s, rl), lessonSubject(s, rl));
+  if (sh.remind && o > 0) h += sendPanel(s, reminderText(s), 'שיעורי גיטרה – תשלום');
+  const items = [...ls.map(l => ({ k: l.date + ' ' + l.time, l })), ...cs.map(c => ({ k: (c.date || '') + ' 99', c }))].sort((a, b) => b.k.localeCompare(a.k));
+  h += `<h2 class="h2">היסטוריה</h2><div class="hist">` + (items.slice(0, 60).map(({ l, c }) => {
+    if (c) {
+      const left = chargeOwed(c);
+      return `<button type="button" class="hrow" data-act="edit-charge" data-id="${esc(c.id)}"><span class="d">${c.date ? fmtDW(c.date) : ''}</span><span class="s"><b class="ktag k-${esc(c.kind)}">${KSHORT[c.kind] || 'חיוב'}</b> ${esc(c.label || '')} · ${money(num(c.amount))}</span>${left > 0 ? `<span class="chip owed">${money(left)}</span>` : '<span class="chip ok">שולם</span>'}</button>`;
+    }
+    const st = lessonState(l);
+    const tag = st === 'paid' ? '<span class="chip ok">שולם</span>' : st === 'off' ? '<span class="chip arch">בוטל</span>' : st === 'upcoming' ? '<span class="chip arch">מתוכנן</span>' : `<span class="chip owed">${money(num(l.price) - paidOf(l))}</span>`;
+    return `<button type="button" class="hrow" data-act="edit-lesson" data-id="${esc(l.id)}"><span class="d">${fmtDW(l.date)}</span><span class="s">${esc(l.time)} · ${l.status === 'noshow' ? 'לא הגיע · ' : ''}${esc(l.note || num(l.duration) + ' דק׳')}</span>${tag}</button>`;
+  }).join('') || '<div class="muted" style="padding:8px 0">עדיין אין כלום.</div>') + '</div>';
+  return h;
+}
+
+function chargeForm(sh) {
+  const c = sh.id ? S.charges[sh.id] : null;
+  const sid = c?.studentId || sh.studentId, s = S.students[sid];
+  const kind = c?.kind || sh.ckind || 'item';
+  const date = c?.date || sh.date || today();
+  return `<div class="row"><h3>${c ? 'עריכת חיוב' : 'חיוב חדש'}</h3>${closeBtn}</div>
+  <div class="muted" style="margin-top:-8px">${esc(s?.name || '')}</div>
+  <form id="cf" class="fields" novalidate>
+    <div class="f full"><span>סוג</span><div class="seg seg4" role="radiogroup">${Object.keys(KINDS).map(v => `<label><input type="radio" name="cf-kind" value="${v}" ${kind === v ? 'checked' : ''}><span>${KSHORT[v]}</span></label>`).join('')}</div></div>
+    <label class="f full">תיאור<input id="cf-label" value="${esc(c?.label || '')}" placeholder="${esc(KHINT[kind])}"></label>
+    <label class="f" id="cf-min-wrap" ${kind === 'overtime' ? '' : 'hidden'}>דקות נוספות<input id="cf-min" type="number" inputmode="numeric" min="0" step="5" value="${c?.minutes || ''}" placeholder="15"></label>
+    <label class="f">סכום (${esc(S.settings.currency)})<input id="cf-amount" type="number" inputmode="decimal" min="0" step="any" value="${c ? num(c.amount) : ''}"></label>
+    <label class="f">תאריך<input id="cf-date" type="date" value="${date}"></label>
+    <label class="f">סכום ששולם (${esc(S.settings.currency)})<input id="cf-paid" type="number" inputmode="decimal" min="0" step="any" value="${c ? num(c.paid) || '' : ''}" placeholder="0"></label>
+    <label class="f">אמצעי תשלום<select id="cf-method">${METHODS.map(x => `<option ${x === (c?.method || S.settings.method) ? 'selected' : ''} value="${x}">${ML(x)}</option>`).join('')}</select></label>
+    <div class="full actions"><button type="button" class="btn" data-act="cf-full">שולם במלואו</button><button type="button" class="btn ghost" data-act="cf-none">לא שולם</button></div>
+  </form>
+  <div class="actions">${c ? '<button type="button" class="btn danger" data-act="del-charge">מחיקה</button>' : ''}<button type="button" class="btn primary grow" data-act="save-charge">${c ? 'שמירה' : 'הוספת חיוב'}</button></div>`;
+}
+function chargeFormLive() {
+  const s = S.students[S.charges[UI.sheet.id]?.studentId || UI.sheet.studentId];
+  const kindOf = () => (document.querySelector('input[name="cf-kind"]:checked') || {}).value || 'item';
+  const calc = () => { if (s && num(s.rate) && num(s.duration) && num($('#cf-min').value)) $('#cf-amount').value = Math.round(num(s.rate) / num(s.duration) * num($('#cf-min').value)); };
+  document.querySelectorAll('input[name="cf-kind"]').forEach(r => r.addEventListener('change', () => {
+    const k = kindOf(); $('#cf-min-wrap').hidden = k !== 'overtime'; $('#cf-label').placeholder = KHINT[k];
+    if (k === 'debt' && !UI.sheet.id) $('#cf-date').value = today();
+  }));
+  $('#cf-min').addEventListener('input', calc);
+}
+function saveCharge() {
+  const ex = UI.sheet.id ? S.charges[UI.sheet.id] : null;
+  const sid = ex?.studentId || UI.sheet.studentId;
+  const kind = (document.querySelector('input[name="cf-kind"]:checked') || {}).value || 'item';
+  const amount = num($('#cf-amount').value);
+  if (!(amount > 0)) return toast('יש להזין סכום.');
+  const rec = { ...(ex || {}), studentId: sid, kind, label: $('#cf-label').value.trim() || KINDS[kind], amount, minutes: kind === 'overtime' ? num($('#cf-min').value) : 0,
+    date: $('#cf-date').value || today(), paid: Math.min(num($('#cf-paid').value), amount), method: $('#cf-method').value };
+  if (UI.sheet.lessonId) rec.lessonId = UI.sheet.lessonId;
+  if (!ex) rec.created = Date.now();
+  delete rec.id;
+  save('charges', ex ? ex.id : uid(), rec);
+  toast(ex ? 'החיוב נשמר' : `החיוב נוסף · ${KINDS[kind]}`);
+  backOrClose();
+}
+
+const DEF_SUBJ = 'תזכורת: שיעור גיטרה ב{יום} {תאריך} בשעה {שעה}';
+const DEF_TPL = 'היי {שם},\nתזכורת לשיעור הגיטרה ב{יום} {תאריך} בשעה {שעה}.\nאפשר לאשר שמגיעים?\nתודה!';
+const firstName = s => ((s.contactName || s.name || '').replace(/^.*[–-]\s*/, '').trim().split(/\s+/)[0] || '');
+function fillTpl(t, s, l) {
+  const d = fromYmd(l.date);
+  return String(t).replace(/\{שם\}/g, firstName(s)).replace(/\{תלמיד\}/g, (s.name || '').trim().split(/\s+/)[0] || '')
+    .replace(/\{יום\}/g, 'יום ' + WDL[d.getDay()]).replace(/\{תאריך\}/g, fmtD(l.date)).replace(/\{שעה\}/g, l.time || '')
+    .replace(/\{משך\}/g, num(l.duration) + ' דקות').replace(/\{מחיר\}/g, money(num(l.price)));
+}
+const lessonSubject = (s, l) => fillTpl(S.settings.remindSubj || DEF_SUBJ, s, l);
+const lessonMsg = (s, l) => fillTpl(S.settings.remindTpl || DEF_TPL, s, l);
+const nextLessonOf = sid => lessonsOf(sid).filter(l => l.status !== 'cancelled' && (l.date > today() || (l.date === today() && toMin(l.time) >= nowMin()))).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time))[0];
+function sendPanel(s, txt, subject) {
+  const wa = waNumber(s.whatsapp || s.phone), tel = waNumber(s.phone);
+  return `<div class="remind" style="display:flex;flex-direction:column;gap:8px">
+    ${s.email ? `<label class="f">נושא האימייל<input id="rm-subj" value="${esc(subject)}"></label>` : ''}
+    <label class="f">הודעה (אפשר לערוך לפני שליחה)<textarea id="rm-text">${esc(txt)}</textarea></label>
+    <div class="actions"><button type="button" class="btn grow" data-act="copy-remind">העתקה</button>
+    ${wa ? `<a class="btn primary grow" data-act="send-link" data-via="wa" data-to="${wa}" href="https://wa.me/${wa}?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">וואטסאפ</a>` : ''}
+    ${tel ? `<a class="btn grow" data-act="send-link" data-via="sms" data-to="${tel}" href="sms:+${tel}?body=${encodeURIComponent(txt)}">SMS</a>` : ''}
+    ${s.email ? `<a class="btn grow" data-act="send-link" data-via="mail" data-to="${esc(s.email)}" href="mailto:${esc(s.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(txt)}">אימייל</a>` : ''}
+    </div>
+    ${!wa && !tel && !s.email ? '<div class="muted" style="font-size:13px">אין לתלמיד טלפון או אימייל. אפשר להעתיק את ההודעה, או להוסיף פרטי קשר בעריכה.</div>' : ''}
+  </div>`;
+}
+function reminderText(s) {
+  const due = lessonsOf(s.id).filter(l => owedOf(l) > 0).sort((a, b) => a.date.localeCompare(b.date));
+  const dueC = chargesOf(s.id).filter(c => chargeOwed(c) > 0).sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+  const who = (s.contactName || s.name || '').replace(/^.*[–-]\s*/, '').split(/\s+/)[0];
+  const dates = due.map(l => fmtD(l.date)).join(', ');
+  const parts = [];
+  if (due.length) parts.push(due.length === 1 ? `השיעור ב־${dates}` : `${due.length} שיעורים (${dates})`);
+  dueC.forEach(c => parts.push(`${c.kind === 'debt' ? 'יתרת חוב קודמת' : c.label} (${money(chargeOwed(c))})`));
+  const tot = owedFor(s.id);
+  return `היי ${who}, תזכורת קטנה לגבי שיעורי הגיטרה. עדיין פתוח לתשלום: ${parts.join(', ')}. סה״כ ${money(tot)}. אפשר לשלם בביט, פייבוקס, העברה בנקאית או מזומן. תודה!`;
+}
+function waNumber(p) {
+  if (!p) return '';
+  const d = p.replace(/\D/g, ''); if (!d) return '';
+  if (p.trim().startsWith('+')) return d;
+  if (d.startsWith('00')) return d.slice(2);
+  if (d.startsWith('0')) return String(S.settings.cc || '').replace(/\D/g, '') + d.slice(1);
+  return d;
+}
+
+/* ---------- contact import ---------- */
+function decodeQP(v) {
+  const bytes = []; v = v.replace(/=\r?\n/g, '');
+  for (let i = 0; i < v.length; i++) {
+    if (v[i] === '=' && /^[0-9A-F]{2}$/i.test(v.substr(i + 1, 2))) { bytes.push(parseInt(v.substr(i + 1, 2), 16)); i += 2; }
+    else bytes.push(v.charCodeAt(i) & 255);
+  }
+  try { return new TextDecoder('utf-8').decode(new Uint8Array(bytes)); } catch (e) { return v; }
+}
+function parseVcf(txt) {
+  const card = (txt.split(/END:VCARD/i)[0] || '');
+  const lines = card.replace(/\r\n/g, '\n').replace(/\n[ \t]/g, '').replace(/=\n/g, '=\n').split('\n');
+  // join quoted-printable soft breaks
+  const joined = []; for (const l of lines) { if (joined.length && /=$/.test(joined[joined.length - 1]) && /QUOTED-PRINTABLE/i.test(joined[joined.length - 1])) joined[joined.length - 1] = joined[joined.length - 1].slice(0, -1) + l; else joined.push(l); }
+  const out = { name: '', tel: '', email: '' }; let nField = '';
+  for (const l of joined) {
+    const i = l.indexOf(':'); if (i < 0) continue;
+    const key = l.slice(0, i), up = key.toUpperCase(); let val = l.slice(i + 1).trim();
+    if (/QUOTED-PRINTABLE/i.test(key)) val = decodeQP(val);
+    val = val.replace(/\\([,;\\])/g, '$1');
+    const prop = up.split(';')[0].split('.').pop();
+    if (prop === 'FN' && !out.name) out.name = val;
+    else if (prop === 'N' && !nField) nField = val.split(';').slice(0, 2).reverse().filter(Boolean).join(' ');
+    else if (prop === 'TEL' && (!out.tel || /CELL|MOBILE/.test(up))) { if (!out.tel || !/CELL|MOBILE/.test(out._t || '')) { out.tel = val.replace(/^tel:/i, ''); out._t = up; } }
+    else if (prop === 'EMAIL' && !out.email) out.email = val;
+  }
+  if (!out.name) out.name = nField;
+  delete out._t; return out;
+}
+function parsePasted(txt) {
+  if (/BEGIN:VCARD/i.test(txt)) return parseVcf(txt);
+  const email = (txt.match(/[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+/) || [''])[0];
+  const tel = ((txt.match(/(\+?\d[\d\s\-()]{7,}\d)/) || [''])[0]).trim();
+  const name = txt.split(/\n/).map(x => x.trim()).find(x => x && !/\d{3}/.test(x) && !x.includes('@')) || '';
+  return { name: name.replace(/^(name|שם)\s*[:：]\s*/i, ''), tel, email };
+}
+function fillContact(c) {
+  const n = $('#sf-name'); if (!n) return;
+  if (c.name && (!n.value.trim() || !UI.sheet.id)) n.value = c.name.trim();
+  if (c.tel) $('#sf-phone').value = c.tel.trim();
+  if (c.email) $('#sf-email').value = c.email.trim();
+  toast(c.name ? `הפרטים של ${c.name.trim()} נוספו` : 'הפרטים נוספו');
+  ($('#sf-rate').value ? $('#sf-name') : $('#sf-rate')).focus();
+}
+document.addEventListener('change', async e => {
+  if (e.target.id !== 'sf-vcf') return;
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  try {
+    const txt = await f.text();
+    const c = /BEGIN:VCARD/i.test(txt) ? parseVcf(txt) : parsePasted(txt);
+    if (!c.name && !c.tel && !c.email) toast('לא נמצאו פרטים בקובץ'); else fillContact(c);
+  } catch (err) { toast('לא הצלחתי לקרוא את הקובץ'); }
+  e.target.value = '';
+});
+
+document.addEventListener('change', async e => {
+  if (e.target.id !== 'restore-file') return;
+  const f = e.target.files && e.target.files[0]; e.target.value = ''; if (!f) return;
+  let d; try { d = JSON.parse(await f.text()); } catch (err) { toast('הקובץ הזה אינו קובץ גיבוי תקין'); return; }
+  if (!d || typeof d !== 'object' || !(d.students || d.lessons)) { toast('לא נמצאו תלמידים או שיעורים בקובץ'); return; }
+  const n = Object.keys(d.students || {}).length, m = Object.keys(d.lessons || {}).length;
+  try {
+    await flush();
+    const j = await api('import', { data: { students: d.students || {}, lessons: d.lessons || {}, charges: d.charges || {}, settings: d.settings || {} } });
+    await pull();
+    toast(`יובאו ${j.imported.students} תלמידים, ${j.imported.lessons} שיעורים ו־${j.imported.charges} חיובים`);
+  } catch (err) { toast(err.auth ? 'צריך להיכנס קודם' : 'הייבוא נכשל. בדקו את החיבור ונסו שוב.'); }
+});
+
+/* ---------- actions ---------- */
+document.addEventListener('click', async e => {
+  const tab = e.target.closest('[data-tab]');
+  if (tab) { UI.tab = tab.dataset.tab; render(); window.scrollTo(0, 0); return; }
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const a = el.dataset.act, id = el.dataset.id;
+  if (a === 'scrim') { if (e.target === el) closeSheet(); return; }
+  switch (a) {
+    case 'close': closeSheet(); break;
+    case 'week': UI.day = addDays(UI.day, +el.dataset.n); render(); break;
+    case 'go-today': UI.day = today(); render(); break;
+    case 'day': UI.day = el.dataset.d; render(); break;
+    case 'month': { const [y, m] = UI.month.split('-').map(Number); const d = new Date(y, m - 1 + (+el.dataset.n), 1); UI.month = d.getFullYear() + '-' + pad(d.getMonth() + 1); render(); break; }
+    case 'new-lesson':
+      if (!Object.keys(S.students).length) { openSheet('student-form'); toast('קודם צריך להוסיף תלמיד'); }
+      else openSheet('lesson', { date: UI.day }); break;
+    case 'new-lesson-for': openSheet('lesson', { studentId: id, date: nextSlotDate(S.students[id]), back: { kind: 'student', id } }); break;
+    case 'edit-lesson': openSheet('lesson', { id, back: UI.sheet?.kind === 'student' ? { kind: 'student', id: UI.sheet.id } : null }); break;
+    case 'new-charge': openSheet('charge', { studentId: id, back: { kind: 'student', id } }); break;
+    case 'edit-charge': openSheet('charge', { id, back: UI.sheet?.kind === 'student' ? { kind: 'student', id: UI.sheet.id } : null }); break;
+    case 'charge-for-lesson': {
+      const l = S.lessons[UI.sheet.id]; if (!l) break;
+      openSheet('charge', { studentId: l.studentId, date: l.date, ckind: 'overtime', lessonId: l.id, back: UI.sheet.back }); break;
+    }
+    case 'save-charge': saveCharge(); break;
+    case 'cf-full': $('#cf-paid').value = $('#cf-amount').value || 0; break;
+    case 'cf-none': $('#cf-paid').value = ''; break;
+    case 'del-charge':
+      if (!el.classList.contains('armed')) { el.classList.add('armed'); el.textContent = 'הקשה נוספת למחיקה'; break; }
+      save('charges', UI.sheet.id, null); toast('החיוב נמחק'); backOrClose(); break;
+    case 'make-weekly': openSheet('student-form', { id, weekly: true }); break;
+    case 'stop-weekly': {
+      if (!UI.sheet.armStop) { UI.sheet.armStop = true; drawSheet(); break; }
+      const n = stopWeekly(UI.sheet.id, today()); UI.sheet.armStop = false; render(); drawSheet();
+      toast(`השיעורים השבועיים הופסקו${n ? `, ${n} שיעורים עתידיים הוסרו` : ''}`); break;
+    }
+    case 'stop-after': {
+      if (!el.dataset.armed) { el.dataset.armed = 1; el.textContent = 'הקשה נוספת להפסקה אחרי התאריך הזה'; break; }
+      const l = S.lessons[UI.sheet.id]; const n = stopWeekly(l.studentId, l.date); render();
+      toast(`השיעורים השבועיים הופסקו${n ? `, ${n} שיעורים הבאים הוסרו` : ''}`); backOrClose(); break;
+    }
+    case 'pick-contact': {
+      if (navigator.contacts && navigator.contacts.select) {
+        try {
+          const r = await navigator.contacts.select(['name', 'tel', 'email'], { multiple: false });
+          if (r && r[0]) fillContact({ name: (r[0].name || [])[0] || '', tel: (r[0].tel || [])[0] || '', email: (r[0].email || [])[0] || '' });
+        } catch (err) { toast('לא ניתן לפתוח את אנשי הקשר. אפשר להשתמש בהדבקה.'); }
+      } else $('#sf-vcf').click();
+      break;
+    }
+    case 'backup': {
+      const data = { app: 'guitar-lesson-book', exported: new Date().toISOString(), students: S.students, lessons: S.lessons, charges: S.charges, settings: S.settings };
+      downloadFile(`guitar-lessons-backup-${today()}.json`, JSON.stringify(data, null, 1), 'application/json'); break;
+    }
+    case 'restore': $('#restore-file').click(); break;
+    case 'logout': {
+      if (!el.classList.contains('armed')) { el.classList.add('armed', 'danger'); el.textContent = 'הקשה נוספת ליציאה'; break; }
+      try { await api('logout'); } catch (err) {}
+      try { localStorage.removeItem(TKEY); localStorage.removeItem(CKEY); localStorage.removeItem(QKEY); } catch (err) {}
+      location.reload(); break;
+    }
+    case 'paste-contact': { const w = $('#sf-paste-wrap'); w.hidden = !w.hidden; if (!w.hidden) $('#sf-paste').focus(); break; }
+    case 'apply-paste': {
+      const c = parsePasted($('#sf-paste').value);
+      if (!c.name && !c.tel && !c.email) { toast('לא נמצאו שם, טלפון או אימייל בטקסט'); break; }
+      fillContact(c); $('#sf-paste-wrap').hidden = true; $('#sf-paste').value = ''; break;
+    }
+    case 'copy': {
+      const t = el.dataset.text;
+      try { await navigator.clipboard.writeText(t); toast('הועתק: ' + t); } catch (err) { toast(t); }
+      break;
+    }
+    case 'send-link': {
+      if (UI.sheet && UI.sheet.lremind && UI.sheet.rlid) { const l = S.lessons[UI.sheet.rlid]; if (l && !l.confirm) save('lessons', l.id, { ...l, confirm: 'sent' }, true); setTimeout(() => { render(); }, 300); }
+      const txt = ($('#rm-text') || {}).value || '', subj = ($('#rm-subj') || {}).value || '', to = el.dataset.to || '';
+      el.href = el.dataset.via === 'wa' ? `https://wa.me/${to}?text=${encodeURIComponent(txt)}`
+        : el.dataset.via === 'sms' ? `sms:+${to}?body=${encodeURIComponent(txt)}`
+        : `mailto:${to}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(txt)}`;
+      break;
+    }
+    case 'confirm-send': { const l = S.lessons[id]; if (l) openSheet('student', { id: l.studentId, lremind: true, lid: l.id }); break; }
+    case 'confirm-yes': { const l = S.lessons[id]; if (l) { save('lessons', id, { ...l, confirm: 'yes' }); toast(`${studentName(l.studentId)} אישר הגעה`); } break; }
+    case 'confirm-no': {
+      const l = S.lessons[id]; if (!l) break;
+      if (!el.classList.contains('armed')) { el.classList.add('armed'); el.textContent = 'בטל?'; el.style.width = 'auto'; el.style.padding = '0 10px'; break; }
+      save('lessons', id, { ...l, confirm: 'no', status: 'cancelled' }); toast('השיעור סומן כמבוטל'); break;
+    }
+    case 'push-on': enablePush(); break;
+    case 'push-off': disablePush(); break;
+    case 'push-test': try { const r = await api('test-push'); toast(r.results.some(c => c >= 200 && c < 300) ? 'נשלחה התראת בדיקה' : 'ההתראה לא נשלחה. נסו לכבות ולהפעיל שוב.'); } catch (err) { toast('אין חיבור לשרת'); } break;
+    case 'lremind': UI.sheet.lremind = !UI.sheet.lremind; UI.sheet.remind = false; drawSheet(); break;
+    case 'lesson-remind': { const l = S.lessons[UI.sheet.id]; if (l) openSheet('student', { id: l.studentId, lremind: true, lid: l.id }); break; }
+    case 'reset-tpl': saveSettings({ remindSubj: DEF_SUBJ, remindTpl: DEF_TPL }); toast('הנוסח הוחזר לברירת המחדל'); break;
+    case 'save-lesson': saveLesson(); break;
+    case 'paid-full': $('#lf-paid').value = $('#lf-price').value || 0; break;
+    case 'paid-none': $('#lf-paid').value = ''; break;
+    case 'del-lesson':
+      if (!el.classList.contains('armed')) { el.classList.add('armed'); el.textContent = 'הקשה נוספת למחיקה'; break; }
+      { const l = S.lessons[UI.sheet.id]; if (l) skipDate(l.studentId, l.date); }
+      save('lessons', UI.sheet.id, null); toast('השיעור נמחק'); backOrClose(); break;
+    case 'del-series': {
+      if (!el.dataset.armed) { el.dataset.armed = 1; el.textContent = 'הקשה נוספת למחיקת שאר הסדרה'; break; }
+      const l = S.lessons[UI.sheet.id];
+      const rest = Object.values(S.lessons).filter(x => x.seriesId === l.seriesId && x.date >= l.date);
+      rest.forEach(x => save('lessons', x.id, null)); closeSheet(); toast(`${rest.length} שיעורים נמחקו`); break;
+    }
+    case 'toggle-pay': {
+      const l = S.lessons[id]; if (!l) break;
+      const st = lessonState(l);
+      if (st === 'paid') save('lessons', id, { ...l, paid: 0 });
+      else save('lessons', id, { ...l, paid: num(l.price), method: l.method && paidOf(l) > 0 ? l.method : S.settings.method, paidOn: today() });
+      toast(st === 'paid' ? 'סומן כלא שולם' : `שולם · ${ML(S.settings.method)}`); break;
+    }
+    case 'new-student': UI.returnToLesson = null; openSheet('student-form'); break;
+    case 'view-student': openSheet('student', { id }); break;
+    case 'edit-student': openSheet('student-form', { id }); break;
+    case 'save-student': saveStudent(); break;
+    case 'del-student': {
+      const n = lessonsOf(UI.sheet.id).length + chargesOf(UI.sheet.id).length;
+      if (n) { toast(`לתלמיד יש ${n} שיעורים וחיובים. עדיף להעביר לארכיון כדי לשמור את היסטוריית התשלומים.`); break; }
+      if (!el.classList.contains('armed')) { el.classList.add('armed'); el.textContent = 'הקשה נוספת למחיקה'; break; }
+      save('students', UI.sheet.id, null); closeSheet(); toast('התלמיד נמחק'); break;
+    }
+    case 'remind': UI.sheet.remind = !UI.sheet.remind; UI.sheet.lremind = false; drawSheet(); break;
+    case 'copy-remind': {
+      const ta = $('#rm-text');
+      try { await navigator.clipboard.writeText(ta.value); toast('ההודעה הועתקה'); } catch (err) { ta.focus(); ta.select(); toast('הטקסט מסומן, אפשר להעתיק אותו.'); }
+      break;
+    }
+    case 'settle-all': {
+      if (!UI.sheet.armAll) { UI.sheet.armAll = true; drawSheet(); break; }
+      const due = lessonsOf(UI.sheet.id).filter(l => owedOf(l) > 0), dueC = chargesOf(UI.sheet.id).filter(c => chargeOwed(c) > 0);
+      UI.sheet.armAll = false; UI.sheet.remind = false;
+      due.forEach(l => save('lessons', l.id, { ...l, paid: num(l.price), method: S.settings.method, paidOn: today() }, true));
+      dueC.forEach(c => save('charges', c.id, { ...c, paid: num(c.amount), method: S.settings.method, paidOn: today() }, true));
+      render(); drawSheet();
+      toast(`${due.length + dueC.length} פריטים סומנו כשולמו`); break;
+    }
+    case 'toggle-archived': UI.showArchived = !UI.showArchived; render(); break;
+    case 'clear-examples': {
+      if (!el.classList.contains('armed')) { el.classList.add('armed', 'danger'); el.textContent = 'הקשה נוספת לניקוי'; break; }
+      const exIds = new Set(Object.values(S.students).filter(s => s.example).map(s => s.id));
+      Object.values(S.lessons).filter(l => l.example || exIds.has(l.studentId)).forEach(l => save('lessons', l.id, null, true));
+      Object.values(S.charges).filter(c => c.example || exIds.has(c.studentId)).forEach(c => save('charges', c.id, null, true));
+      Object.values(S.students).filter(s => s.example).forEach(s => save('students', s.id, null, true));
+      render();
+      toast('הדוגמאות נמחקו'); break;
+    }
+    case 'export': exportCsv(); break;
+  }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && UI.sheet) closeSheet();
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('article[data-act]')) { e.preventDefault(); e.target.click(); }
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'q') { UI.q = e.target.value; const pos = e.target.selectionStart; render(); const q = $('#q'); q.focus(); try { q.setSelectionRange(pos, pos); } catch (_) {} }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.id === 'set-cur') saveSettings({ currency: t.value.trim() || '₪' });
+  if (t.id === 'set-cc') saveSettings({ cc: t.value.replace(/\D/g, '') });
+  if (t.id === 'set-method') saveSettings({ method: t.value });
+  if (t.id === 'set-ws') saveSettings({ weekStart: +t.value });
+  if (t.id === 'set-rbefore') saveSettings({ remindBeforeAt: t.value || '21:00' });
+  if (t.id === 'set-rsame') saveSettings({ remindSameAt: t.value || '10:00' });
+  if (t.id === 'set-rsubj') saveSettings({ remindSubj: t.value.trim() || DEF_SUBJ });
+  if (t.id === 'set-rtpl') saveSettings({ remindTpl: t.value.trim() || DEF_TPL });
+});
+function nextSlotDate(s) {
+  if (!s || !(s.slotDay >= 0)) return UI.day;
+  let d = today(); for (let i = 0; i < 7; i++) { if (fromYmd(d).getDay() === +s.slotDay) return d; d = addDays(d, 1); }
+  return UI.day;
+}
+function exportCsv() {
+  const ml = Object.values(S.lessons).filter(l => l.date.slice(0, 7) === UI.month).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+  const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+  const mc = Object.values(S.charges).filter(c => (c.date || '').slice(0, 7) === UI.month).sort((a, b) => a.date.localeCompare(b.date));
+  const rows = [['תאריך', 'שעה', 'תלמיד', 'סוג', 'דקות', 'מחיר', 'שולם', 'חוב', 'אמצעי תשלום', 'סטטוס', 'הערות']]
+    .concat(ml.map(l => [l.date, l.time, studentName(l.studentId), 'שיעור', num(l.duration), num(l.price), paidOf(l), owedOf(l), paidOf(l) > 0 ? ML(l.method) : '', l.status === 'cancelled' ? 'בוטל' : l.status === 'noshow' ? 'לא הגיע' : 'התקיים', l.note]))
+    .concat(mc.map(c => [c.date, '', studentName(c.studentId), KINDS[c.kind] || 'חיוב', c.minutes || '', num(c.amount), num(c.paid), chargeOwed(c), num(c.paid) > 0 ? ML(c.method) : '', '', c.label]));
+  const csv = '﻿' + rows.map(r => r.map(q).join(',')).join('\r\n');
+  downloadFile(`guitar-lessons-${UI.month}.csv`, csv, 'text/csv;charset=utf-8');
+}
+init();
+</script>
+</body>
+</html>
